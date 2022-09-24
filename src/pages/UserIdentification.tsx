@@ -20,7 +20,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 import registrationNameIcon from '../assets/registrationName.png';
-handleSubmit
 export function UserIdentification() {
     const [isFocused, setIsFocused] = useState(false);
     const [name, setName] = useState<string>();
@@ -48,7 +47,7 @@ export function UserIdentification() {
             navigation.navigate('Confirmation'as never, {
                 title: 'Pronto!',
                 buttonTitle: 'Cadastrar',
-                nextScreen: 'MyPlants',
+                nextScreen: 'PlantSave',    
             }as never);        
         }catch{
             Alert.alert('Não foi possível salvar o seu nome. Tente novamente mais tarde!');
