@@ -12,9 +12,9 @@
 
 const int soilSensorPin = 32;
 const int DHTPin = 22;
-//const char *SSID = "2.4Leonardo";     // wifi id
-//const char *PASSWORD = "Leonardi789"; // password
-//const int WIFITIMEOUT = 15000;
+// const char *SSID = "2.4Leonardo";     // wifi id
+// const char *PASSWORD = "Leonardi789"; // password
+// const int WIFITIMEOUT = 15000;
 
 WiFiServer server(80);
 WiFiClient client;
@@ -86,7 +86,7 @@ void connectToWifiFi()
     WiFi.mode(WIFI_STA);
     WiFiManager wm;
     bool res;
-    
+
     // wm.autoConnect automatically connect using saved credentials,
     // if connection fails, it starts an access point with the specified name
     // then goes into a blocking loop awaiting configuration and will return success result
@@ -131,6 +131,28 @@ void setup()
         ; // wait for serial port to connect. Needed for native USB port only
     }
     connectToWifiFi();
+    HTTPClient http;
+
+    http.begin("https://middleware-arduino.azurewebsites.net/tablestorage");
+    http.addHeader("Content-Type", "application/json");           // Specify content-type header
+    http.addHeader("Cookie", "ARRAffinity=79e06db539acb57119e709978d2cf1da299e8341753d6f6345007fcab3f69bc5; ARRAffinitySameSite=79e06db539acb57119e709978d2cf1da299e8341753d6f6345007fcab3f69bc5");           // Specify content-type header
+    int httpResponseCode = http.PUT("{   \"partitionKey\": \"teste2\",   \"rowKey\": \"teste2\",   \"timestamp\": \"2022-09-16T17:33:52.885Z\",   \"eTag\": \"string\",   \"data\": \"2022-09-16T17:33:52.885Z\",   \"umidade\": 6,   \"notificado\": false,   \"plantaId\": 6,   \"tableStorageName\": \"HistoricoUmidade\" }"); // Send the actual POST request
+    if (httpResponseCode > 0)
+    {
+
+        String response = http.getString(); // Get the response to the request
+
+        Serial.println(httpResponseCode); // Print return code
+        Serial.println(response);         // Print request answer
+    }
+    else
+    {
+
+        Serial.print("Error on sending POST: ");
+        Serial.println(httpResponseCode);
+    }
+
+    http.end(); // Free resources
 }
 
 void loop()
