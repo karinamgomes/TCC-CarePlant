@@ -1,0 +1,24 @@
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.Api.Application\obj\Debug\net6.0\Historico.Api.Application.csproj.AssemblyReference.cache
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.Api.Application\obj\Debug\net6.0\Historico.Api.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.Api.Application\obj\Debug\net6.0\Historico.Api.Application.AssemblyInfoInputs.cache
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.Api.Application\obj\Debug\net6.0\Historico.Api.Application.AssemblyInfo.cs
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.Api.Application\obj\Debug\net6.0\Historico.Api.Application.csproj.CoreCompileInputs.cache
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.Api.Application\bin\Debug\net6.0\Historico.Api.Application.deps.json
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.Api.Application\bin\Debug\net6.0\Historico.Api.Application.dll
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.Api.Application\bin\Debug\net6.0\Historico.Api.Application.pdb
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.Api.Application\obj\Debug\net6.0\Historico.Api.Application.dll
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.Api.Application\obj\Debug\net6.0\refint\Historico.Api.Application.dll
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.Api.Application\obj\Debug\net6.0\Historico.Api.Application.pdb
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.Api.Application\obj\Debug\net6.0\ref\Historico.Api.Application.dll
+C:\repos\TCC\Historico.API\Historico.Api.Application\bin\Debug\net6.0\Historico.Api.Application.deps.json
+C:\repos\TCC\Historico.API\Historico.Api.Application\bin\Debug\net6.0\Historico.Api.Application.dll
+C:\repos\TCC\Historico.API\Historico.Api.Application\bin\Debug\net6.0\Historico.Api.Application.pdb
+C:\repos\TCC\Historico.API\Historico.Api.Application\obj\Debug\net6.0\Historico.Api.Application.csproj.AssemblyReference.cache
+C:\repos\TCC\Historico.API\Historico.Api.Application\obj\Debug\net6.0\Historico.Api.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\repos\TCC\Historico.API\Historico.Api.Application\obj\Debug\net6.0\Historico.Api.Application.AssemblyInfoInputs.cache
+C:\repos\TCC\Historico.API\Historico.Api.Application\obj\Debug\net6.0\Historico.Api.Application.AssemblyInfo.cs
+C:\repos\TCC\Historico.API\Historico.Api.Application\obj\Debug\net6.0\Historico.Api.Application.csproj.CoreCompileInputs.cache
+C:\repos\TCC\Historico.API\Historico.Api.Application\obj\Debug\net6.0\Historico.Api.Application.dll
+C:\repos\TCC\Historico.API\Historico.Api.Application\obj\Debug\net6.0\refint\Historico.Api.Application.dll
+C:\repos\TCC\Historico.API\Historico.Api.Application\obj\Debug\net6.0\Historico.Api.Application.pdb
+C:\repos\TCC\Historico.API\Historico.Api.Application\obj\Debug\net6.0\ref\Historico.Api.Application.dll
