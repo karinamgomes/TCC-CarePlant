@@ -6,7 +6,7 @@ import {
     TouchableOpacity,
     StyleSheet,
     Dimensions,
-    View
+    View,
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/core';
@@ -14,14 +14,28 @@ import { useNavigation } from '@react-navigation/core';
 import welcomeImg from '../assets/welcome.png';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function Welcome() {
     const navigation = useNavigation();
 
-    function handleStart(){
-        navigation.navigate('UserIdentification' as never);        
+    async function handleStart(){
+        
+        //await AsyncStorage.removeItem('@plantmanager:user')
+
+        console.log(await AsyncStorage.getItem('@plantmanager:user'))
+        let UserName = await AsyncStorage.getItem('@plantmanager:user')
+        if(!UserName){
+            navigation.navigate('UserIdentification' as never);
+        }else{
+            navigation.navigate('MyPlants' as never)
+        }
+
+        // navigation.navigate('UserIdentification' as never);
     }
 
+    const teste = AsyncStorage.getItem("@plantmanager:user");
+    console.log(JSON.stringify(teste))
 
     return (
         <SafeAreaView style={styles.container}>

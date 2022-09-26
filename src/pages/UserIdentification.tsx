@@ -12,7 +12,8 @@ import {
     Alert,
     TouchableOpacity,
     Image,
-    Dimensions
+    Dimensions,
+    // ToastAndroid
 } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -34,8 +35,10 @@ export function UserIdentification() {
         setIsFocused(true)
     }
 
-    function handleInputChange(value: string) {
+    async function handleInputChange(value: string) {
         setName(value);
+        await AsyncStorage.setItem('@plantmanager:user',value);
+        // ToastAndroid.show('Sucesso',ToastAndroid.CENTER)
     }
 
     async function handleSubmit() {
@@ -58,7 +61,7 @@ export function UserIdentification() {
         <SafeAreaView style={styles.container}>
             <KeyboardAvoidingView
                 style={styles.container}
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                behavior={Platform.OS === 'android' ? 'padding' : 'height'}
             >
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                     <View style={styles.content}>
