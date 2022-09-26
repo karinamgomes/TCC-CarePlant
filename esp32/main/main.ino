@@ -4,6 +4,9 @@
  *  - Quanto mais seco, maior
  */
 
+//TODO - Necesário criar um validador para verificar se as requisições foram enviadas para a API com sucesso, retentar enviar até conseguir ou desconsiderar; 
+//TODO - Fila de requisições não enviadas?
+
 #include <WiFi.h>
 #include <WiFiManager.h>
 #include "DHT.h"
@@ -12,9 +15,6 @@
 
 const int soilSensorPin = 32;
 const int DHTPin = 22;
-// const char *SSID = "2.4Leonardo";     // wifi id
-// const char *PASSWORD = "Leonardi789"; // password
-// const int WIFITIMEOUT = 15000;
 
 WiFiServer server(80);
 WiFiClient client;
@@ -59,7 +59,7 @@ void printHeatIndex(float ht)
 void printHumidity(int soilValue)
 {
     String analogStr;
-    analogStr = "\nAnalog Value : ";
+    analogStr = "\nValor analogo humidade: ";
     analogStr += soilValue;
     printOnServer(analogStr);
 }
@@ -122,6 +122,53 @@ void printOnServer(String message)
     client.print(message);
 }
 
+int const verificacaoSeguranca = 7;
+int const QTD_VEZES_QUE_UMA_NOVA_UMIDADE_SE_REPETIU = 5;
+int umidadeMinima = 15; // Valor no futuro deveria ser obtido atráves da API.
+
+bool isNovaUmidadeConfiavel(int confianca)
+{
+    return confianca >= QTD_VEZES_QUE_UMA_NOVA_UMIDADE_SE_REPETIU;
+}
+
+void monitoraHumidadeNoSolo(int umidadeAtual)
+{
+    static int confianca = 0;
+    static int umidadeAntiga = -1;
+    if (umidadeAtual < (umidadeAntiga - verificacaoSeguranca) || umidadeAtual > (umidadeAntiga + verificacaoSeguranca))
+    {
+        confianca += 1;
+        if (isNovaUmidadeConfiavel(confianca))
+        {
+            printOnServer(" Nova humidade detectada.");
+            Serial.println("Nova umidade detectada.");
+            if (umidadeAtual < umidadeMinima)
+            {
+                printOnServer("\nUmidade menor que a mínima detectada.");
+                Serial.println("Umidade menor que a mínima detectada.");
+                sendPutRequest("tablestorage", "{   \"partitionKey\": \"teste2\",   \"rowKey\": \"teste2\",   \"timestamp\": \"2022-09-16T17:33:52.885Z\",   \"eTag\": \"string\",   \"data\": \"2022-09-16T17:33:52.885Z\",   \"umidade\": 6,   \"notificado\": false,   \"plantaId\": 6,   \"tableStorageName\": \"HistoricoUmidade\" }");
+            }
+            else if (umidadeAtual > umidadeAntiga)
+            {
+                printOnServer("\nO nível de umidade aumentou.");
+                Serial.println("O nível de umidade aumentou.");
+            }
+            else
+            {
+                // Umidade atual menor que a ultima
+                printOnServer("\nO nível de umidade diminuiu.");
+                Serial.println("O nível de umidade diminuiu.");
+            }
+            umidadeAntiga = umidadeAtual;
+            confianca = 0;
+        }
+    }
+    else
+    {
+        confianca = 0;
+    }
+}
+
 void setup()
 {
     dht.begin();
@@ -131,7 +178,6 @@ void setup()
         ; // wait for serial port to connect. Needed for native USB port only
     }
     connectToWifiFi();
-    sendPutRequest("tablestorage", "{   \"partitionKey\": \"teste2\",   \"rowKey\": \"teste2\",   \"timestamp\": \"2022-09-16T17:33:52.885Z\",   \"eTag\": \"string\",   \"data\": \"2022-09-16T17:33:52.885Z\",   \"umidade\": 6,   \"notificado\": false,   \"plantaId\": 6,   \"tableStorageName\": \"HistoricoUmidade\" }");
 }
 
 void loop()
@@ -177,12 +223,15 @@ void loop()
                     dtostrf(hif, 6, 2, fahrenheitTemp);
                     dtostrf(h, 6, 2, humidityTemp);
 
+                    int porcentHumidade = calcularPorcentagemUmidadeNoSolo(soilSensorValue);
+
                     // You can delete the following Serial.print's, it's just for debugging purposes
                     printHumidity(h);
                     printTemperature(t);
                     printHeatIndex(hic);
                     printHumidity(soilSensorValue);
-                    printHumidityPorcentage(calcularPorcentagemUmidadeNoSolo(soilSensorValue));
+                    printHumidityPorcentage(porcentHumidade);
+                    monitoraHumidadeNoSolo(porcentHumidade);
                 }
                 delay(2500);
             }
