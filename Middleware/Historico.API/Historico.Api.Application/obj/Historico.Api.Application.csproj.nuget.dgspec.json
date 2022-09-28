@@ -59,6 +59,10 @@
               "target": "Package",
               "version": "[2.0.123, )"
             },
+            "Dapper.Contrib": {
+              "target": "Package",
+              "version": "[2.0.78, )"
+            },
             "Microsoft.AspNetCore.Http.Abstractions": {
               "target": "Package",
               "version": "[2.2.0, )"
@@ -71,6 +75,10 @@
               "target": "Package",
               "version": "[6.0.0, )"
             },
+            "MySqlConnector": {
+              "target": "Package",
+              "version": "[2.2.0-beta.1, )"
+            },
             "Serilog": {
               "target": "Package",
               "version": "[2.12.0, )"
@@ -82,6 +90,10 @@
             "WindowsAzure.Storage": {
               "target": "Package",
               "version": "[9.3.3, )"
+            },
+            "WindowsAzure.StorageExtensions": {
+              "target": "Package",
+              "version": "[1.3.0, )"
             }
           },
           "imports": [

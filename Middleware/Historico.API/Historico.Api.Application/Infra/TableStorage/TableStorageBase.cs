@@ -1,10 +1,7 @@
 ﻿using Historico.Api.Application.Infra.TableStorage.Entity;
 using Microsoft.WindowsAzure.Storage.Table;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
+using WindowsAzure.Table.Extensions;
 
 namespace Historico.Api.Application.Infra.TableStorage
 {
@@ -30,5 +27,38 @@ namespace Historico.Api.Application.Infra.TableStorage
         {
             return await _tableClient.GetTableReference(table).ExistsAsync();
         }
+
+        public async Task<List<T>> Get<T>(string tableStorageName, string partitionKey) where T : TableStorageEntity, new ()
+        {
+            try
+            { 
+                TableQuery<T> tableQuery = new TableQuery<T>()
+                .Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, partitionKey));
+
+                TableContinuationToken continuationToken = null;
+
+                List<T> historico = new List<T>();
+
+                CloudTable cloudTable = _tableClient.GetTableReference(tableStorageName);
+
+                do
+                {
+                    Task<TableQuerySegment<T>> task = cloudTable.ExecuteQuerySegmentedAsync(tableQuery, continuationToken);
+
+                    TableQuerySegment<T> querySegment = task.Result;
+
+                    historico.AddRange(querySegment.ToList());
+                    continuationToken = querySegment.ContinuationToken;
+
+                } while (continuationToken != null);
+
+                return historico;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }            
+        }
+
     }
 }

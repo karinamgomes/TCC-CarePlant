@@ -8,12 +8,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
-//builder.Services.AddSwaggerGen(options =>
-//{
-//    // using System.Reflection;
-//    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-//    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
-//});
+
+builder.Services.AddSignalR();
+
+builder.Services.AddSwaggerGen(options =>
+{
+    // using System.Reflection;
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+});
+
 builder.Services.ConfigureAutoMapper();
 builder.Services.ConfigureDependencies(builder.Configuration);
 builder.Services.TableStorageBase(builder.Configuration);
@@ -28,15 +32,17 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-//app.UseSwagger();
+app.UseSwagger();
 
-//app.UseSwaggerUI(c =>
-//{
-//    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-//    c.RoutePrefix = string.Empty;
-//});
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+    c.RoutePrefix = string.Empty;
+});
 
 app.UseHttpsRedirection();
+
+app.MapHub<MyHubConfiguration>("/Notificacao");
 
 app.UseStaticFiles();
 

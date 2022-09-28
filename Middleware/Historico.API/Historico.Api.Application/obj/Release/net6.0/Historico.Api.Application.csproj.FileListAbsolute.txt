@@ -22,3 +22,15 @@ C:\repos\TCC\Historico.API\Historico.Api.Application\obj\Release\net6.0\Historic
 C:\repos\TCC\Historico.API\Historico.Api.Application\obj\Release\net6.0\refint\Historico.Api.Application.dll
 C:\repos\TCC\Historico.API\Historico.Api.Application\obj\Release\net6.0\Historico.Api.Application.pdb
 C:\repos\TCC\Historico.API\Historico.Api.Application\obj\Release\net6.0\ref\Historico.Api.Application.dll
+C:\repos\CarePlant\Middleware\Historico.API\Historico.Api.Application\bin\Release\net6.0\Historico.Api.Application.deps.json
+C:\repos\CarePlant\Middleware\Historico.API\Historico.Api.Application\bin\Release\net6.0\Historico.Api.Application.dll
+C:\repos\CarePlant\Middleware\Historico.API\Historico.Api.Application\bin\Release\net6.0\Historico.Api.Application.pdb
+C:\repos\CarePlant\Middleware\Historico.API\Historico.Api.Application\obj\Release\net6.0\Historico.Api.Application.csproj.AssemblyReference.cache
+C:\repos\CarePlant\Middleware\Historico.API\Historico.Api.Application\obj\Release\net6.0\Historico.Api.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\repos\CarePlant\Middleware\Historico.API\Historico.Api.Application\obj\Release\net6.0\Historico.Api.Application.AssemblyInfoInputs.cache
+C:\repos\CarePlant\Middleware\Historico.API\Historico.Api.Application\obj\Release\net6.0\Historico.Api.Application.AssemblyInfo.cs
+C:\repos\CarePlant\Middleware\Historico.API\Historico.Api.Application\obj\Release\net6.0\Historico.Api.Application.csproj.CoreCompileInputs.cache
+C:\repos\CarePlant\Middleware\Historico.API\Historico.Api.Application\obj\Release\net6.0\Historico.Api.Application.dll
+C:\repos\CarePlant\Middleware\Historico.API\Historico.Api.Application\obj\Release\net6.0\refint\Historico.Api.Application.dll
+C:\repos\CarePlant\Middleware\Historico.API\Historico.Api.Application\obj\Release\net6.0\Historico.Api.Application.pdb
+C:\repos\CarePlant\Middleware\Historico.API\Historico.Api.Application\obj\Release\net6.0\ref\Historico.Api.Application.dll
