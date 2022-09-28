@@ -6,6 +6,7 @@
 
 // TODO - Necesário criar um validador para verificar se as requisições foram enviadas para a API com sucesso, retentar enviar até conseguir ou desconsiderar;
 // TODO - Fila de requisições não enviadas?
+// TODO (IMPORTANTE) - No futuro, fazer com que as medições não sejam iniciadas quando o usuário entrar no webserver.
 
 #include <WiFi.h>
 #include <WiFiManager.h>
