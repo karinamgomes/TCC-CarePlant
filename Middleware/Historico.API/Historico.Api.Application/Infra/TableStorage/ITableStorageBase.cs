@@ -1,4 +1,5 @@
 ﻿using Historico.Api.Application.Infra.TableStorage.Entity;
+using Microsoft.WindowsAzure.Storage.Table;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,7 @@ namespace Historico.Api.Application.Infra.TableStorage
         Task CreateOrUpdate(TableStorageEntity entity, string table);
 
         Task<bool> GetTable(string table);
+
+        Task<List<T>> Get<T>(string tableStorageName, string partitionKey) where T : TableStorageEntity, new();
     }
 }

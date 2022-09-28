@@ -45,9 +45,9 @@ namespace Historico.API.Controller
         /// <response code="500">Erro interno no servidor.</response>
 
         [HttpGet]
-        public async Task<IActionResult> BuscarHistorico([FromBody] TableStorageRequest query)
+        public async Task<IActionResult> BuscarHistorico([FromHeader] string partitionKey, string tableStorageName)
         {
-            var resultado = await _historicoService.GravarHistorico(query);
+            var resultado = await _historicoService.BuscarHistorico(partitionKey, tableStorageName);
 
             return new ObjectResult(resultado) { StatusCode = resultado.StatusCode, Value = resultado };
         }

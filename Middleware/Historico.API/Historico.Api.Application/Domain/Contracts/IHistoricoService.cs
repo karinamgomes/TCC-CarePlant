@@ -6,5 +6,6 @@ namespace Historico.Api.Application.Domain.Contracts
     public interface IHistoricoService
     {
         Task<ResponseObject> GravarHistorico(TableStorageRequest historico);
+        Task<ResponseObject> BuscarHistorico(string partitionKey, string tableStorageName);
     }
 }

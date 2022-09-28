@@ -4,9 +4,12 @@ import {
     View,
     Text,
     FlatList,
-    Alert
+    Alert,
+    Dimensions,
+    Image
 } from 'react-native';
 
+import SemPlantas from '../assets/SemPlantas.png';
 import { Header } from '../components/Header';
 import colors from '../styles/colors';
 import { PlantProps, loadPlant, removePlant } from '../libs/storage';
@@ -15,6 +18,7 @@ import { PlantCardSecondary } from '../components/PlantCardSecondary';
 import { Load } from '../components/Load';
 import { Button } from '../components/Button';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function MyPlants() {
     const [myPlants, setMyPlants] = useState<PlantProps[]>([]);
@@ -24,8 +28,9 @@ export function MyPlants() {
     function handlePlantSelect(plant: PlantProps){
         navigation.navigate('PlantStatus' as never, { plant } as never);
     }
-    function handleNewPlant(){
+    async function handleNewPlant(){
         navigation.navigate('PlantSelect' as never);
+        console.log(myPlants)
     }
     function handleRemove(plant: PlantProps) {
         Alert.alert('Remover', `Deseja remover a ${plant.name}?`, [
@@ -57,7 +62,7 @@ export function MyPlants() {
             setLoading(false);
         }
         loadStorageData();
-    }, [])
+    }, [myPlants])
 
     if (loading) return <Load />
 
@@ -68,6 +73,19 @@ export function MyPlants() {
                 <Text style={styles.plantsTitle}>
                     Minhas <Text style={styles.plantsTitleBold}>Plantas</Text>
                 </Text>
+                {myPlants.length <= 0 ?
+                <View style={styles.semplanta}>
+                    <Image
+                        source={SemPlantas}
+                        style={styles.image}
+                        resizeMode="contain"
+                    />
+                    <Text style={styles.noPlants}>
+                        Não há plantas cadastradas!
+                    </Text>
+                    
+                </View>
+                :
                 <FlatList
                     data={myPlants}
                     keyExtractor={(item) => String(item.id)}
@@ -80,6 +98,7 @@ export function MyPlants() {
                     )}
                     showsVerticalScrollIndicator={false}
                 />
+                }
             </View>
             <View>
                 <Button style={styles.button}
@@ -145,5 +164,22 @@ const styles = StyleSheet.create({
         fontFamily: fonts.heading,
         color: colors.heading,
         marginVertical: 20
+    },
+    image:{
+        height: Dimensions.get('window').width * 0.4,
+        width: 200,
+        paddingHorizontal: 170,
+        marginBottom:25
+    },
+    noPlants:{
+        fontSize: 22,
+        fontFamily: fonts.heading,
+        color: colors.heading,
+    },
+    semplanta:{
+        alignItems: 'center',
+        justifyContent:'center',
+        height: Dimensions.get('window').width * 0.9
     }
+
 });
