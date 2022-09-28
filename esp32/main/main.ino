@@ -4,13 +4,17 @@
  *  - Quanto mais seco, maior
  */
 
-//TODO - Necesário criar um validador para verificar se as requisições foram enviadas para a API com sucesso, retentar enviar até conseguir ou desconsiderar; 
-//TODO - Fila de requisições não enviadas?
+// TODO - Necesário criar um validador para verificar se as requisições foram enviadas para a API com sucesso, retentar enviar até conseguir ou desconsiderar;
+// TODO - Fila de requisições não enviadas?
 
 #include <WiFi.h>
 #include <WiFiManager.h>
 #include "DHT.h"
 #include "api_communication.h"
+#include "util.h"
+#include <iostream>
+#include <chrono>
+
 #define DHTTYPE DHT11
 
 const int soilSensorPin = 32;
@@ -28,6 +32,11 @@ static char humidityTemp[7];
 // Client variables
 char linebuf[80];
 int charcount = 0;
+
+const char *ntpServer = "pool.ntp.org";
+const long gmtOffset_sec = -18000; // UTC Brasileiro -5 é igual a -18000
+const int daylightOffset_sec = 0;  // No brasil não temos mais o horário de verão
+uint64_t chipIdMain = ESP.getEfuseMac();
 
 void printHumidity(float h)
 {
@@ -123,7 +132,7 @@ void printOnServer(String message)
 }
 
 int const verificacaoSeguranca = 7;
-int const QTD_VEZES_QUE_UMA_NOVA_UMIDADE_SE_REPETIU = 5;
+int const QTD_VEZES_QUE_UMA_NOVA_UMIDADE_SE_REPETIU = 4;
 int umidadeMinima = 15; // Valor no futuro deveria ser obtido atráves da API.
 
 bool isNovaUmidadeConfiavel(int confianca)
@@ -146,16 +155,18 @@ void monitoraHumidadeNoSolo(int umidadeAtual)
             {
                 printOnServer("\nUmidade menor que a mínima detectada.");
                 Serial.println("Umidade menor que a mínima detectada.");
-                sendPutRequest("tablestorage", "{   \"partitionKey\": \"teste2\",   \"rowKey\": \"teste2\",   \"timestamp\": \"2022-09-16T17:33:52.885Z\",   \"eTag\": \"string\",   \"data\": \"2022-09-16T17:33:52.885Z\",   \"umidade\": 6,   \"notificado\": false,   \"plantaId\": 6,   \"tableStorageName\": \"HistoricoUmidade\" }");
+                updateHistoricoUmidade(mac2String((byte *)&chipIdMain), umidadeAtual, 0, true);
             }
             else if (umidadeAtual > umidadeAntiga)
             {
+                updateHistoricoUmidade(mac2String((byte *)&chipIdMain), umidadeAtual, 0, false);
                 printOnServer("\nO nível de umidade aumentou.");
                 Serial.println("O nível de umidade aumentou.");
             }
             else
             {
                 // Umidade atual menor que a ultima
+                updateHistoricoUmidade(mac2String((byte *)&chipIdMain), umidadeAtual, 0, false);
                 printOnServer("\nO nível de umidade diminuiu.");
                 Serial.println("O nível de umidade diminuiu.");
             }
@@ -178,6 +189,7 @@ void setup()
         ; // wait for serial port to connect. Needed for native USB port only
     }
     connectToWifiFi();
+    configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
 }
 
 void loop()
