@@ -28,8 +28,8 @@ export function MyPlants() {
     function handlePlantSelect(plant: PlantProps){
         navigation.navigate('PlantStatus' as never, { plant } as never);
     }
-    async function handleNewPlant(){
-        navigation.navigate('PlantSelect' as never);
+    async function handleNewPlant(plant: PlantProps){
+        navigation.navigate('PlantSave' as never, { plant } as never);
         console.log(myPlants)
     }
     function handleRemove(plant: PlantProps) {
