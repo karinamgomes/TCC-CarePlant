@@ -12,7 +12,8 @@ import {
     Alert,
     TouchableOpacity,
     Image,
-    Dimensions
+    Dimensions,
+    // ToastAndroid
 } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -20,7 +21,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 import registrationNameIcon from '../assets/registrationName.png';
-
 export function UserIdentification() {
     const [isFocused, setIsFocused] = useState(false);
     const [name, setName] = useState<string>();
@@ -35,8 +35,10 @@ export function UserIdentification() {
         setIsFocused(true)
     }
 
-    function handleInputChange(value: string) {
+    async function handleInputChange(value: string) {
         setName(value);
+        await AsyncStorage.setItem('@plantmanager:user',value);
+        // ToastAndroid.show('Sucesso',ToastAndroid.CENTER)
     }
 
     async function handleSubmit() {
@@ -48,7 +50,7 @@ export function UserIdentification() {
             navigation.navigate('Confirmation'as never, {
                 title: 'Pronto!',
                 buttonTitle: 'Cadastrar',
-                nextScreen: 'MyPlants',
+                nextScreen: 'PlantSave',    
             }as never);        
         }catch{
             Alert.alert('Não foi possível salvar o seu nome. Tente novamente mais tarde!');
@@ -59,7 +61,7 @@ export function UserIdentification() {
         <SafeAreaView style={styles.container}>
             <KeyboardAvoidingView
                 style={styles.container}
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                behavior={Platform.OS === 'android' ? 'padding' : 'height'}
             >
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                     <View style={styles.content}>
