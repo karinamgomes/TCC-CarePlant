@@ -11,13 +11,12 @@ uint64_t chipIdAPI = ESP.getEfuseMac();
 String retornaNumeroRegistro()
 {
   String numRegistro;
-  String randomNum = String(random(10000000));
   String date = retornaTempoISO8601();
-  String finalChipId = mac2String((byte *)&chipIdAPI).substring(0, -3);
-  numRegistro += date;
+  String chipId = mac2String((byte *)&chipIdAPI);
+  String finalChipId = chipId.substring(0, 5);
   numRegistro += finalChipId;
-  numRegistro += ".";
-  numRegistro += randomNum;
+  numRegistro += "-";
+  numRegistro += date;
   return numRegistro;
 }
 
