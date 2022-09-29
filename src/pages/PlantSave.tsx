@@ -24,6 +24,8 @@ import { Button } from '../components/Button';
 import waterdrop from '../assets/waterdrop.png';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
+import * as ImagePicker from 'expo-image-picker';
+import teste from '../assets/plus-circle.png';
 
 interface Params {
     plant: PlantProps
@@ -67,8 +69,8 @@ export function PlantSave() {
 
             navigation.navigate('Confirmation' as never, {
                 title: 'Tudo certo',
-                subtitle: 'Fique tranquilo que sempre vamos lembrar você de cuidar da sua plantinha com muito cuidado.',
-                buttonTitle: 'Muito Obrigado :D',
+                subtitle: `Cadastro de ${plant.name} realizado com sucesso.`,
+                buttonTitle: 'Minhas plantas',
                 nextScreen: 'MyPlants',
             } as never);
 
@@ -84,6 +86,45 @@ export function PlantSave() {
        }
         setInputNumber(onlyNumbers)
     }
+    const [image, setImage] = useState<any>();
+    
+    const uploadImage = async () => {
+        if (image != null) {
+          const fileToUpload = image;
+          const data = new FormData();
+          data.append('name', 'Image Upload');
+          data.append('file_attachment', fileToUpload);
+          let res = await fetch(
+            'http://localhost/upload.php',
+            {
+              method: 'post',
+              body: data,
+              headers: {
+                'Content-Type': 'multipart/form-data; ',
+              },
+            }
+          );
+          let responseJson = await res.json();
+          if (responseJson.status == 1) {
+            alert('Sucesso!');
+          }
+        } else {
+          alert('Por favor, selecione uma imagem');
+        }
+      };
+    const pickImage = async () => {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+    
+      if (!result.cancelled) {
+        setImage(result.uri);
+      }
+    };
+
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
@@ -91,29 +132,36 @@ export function PlantSave() {
         >
             <View style={styles.container}>
                 <View style={styles.plantInfo}>
-                    <SvgFromUri
-                        uri={plant.photo}
-                        height={150}
-                        width={150}
-                    />
+
+                    {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+
+                    {!image &&<TouchableOpacity
+                        style={styles.buttonStyle}
+                        activeOpacity={0.5}
+                        onPress={pickImage}>
+                        <Image
+                        source={teste}
+                        style={styles.plusCicle}  
+                        />
+                        <Text style={styles.buttonTextStyle}>Adicione uma imagem </Text>
+                    </TouchableOpacity>}
                     
+                    <TextInput 
+                        style={styles.inputPlantName}
+                        placeholder='Nome da Planta'
+                        placeholderTextColor={colors.white}
+                        onChangeText={texte => onChanged(texte)}
+                    />
                 </View>
 
                 <View style={styles.controller}>
                     <View style={styles.tipContainer}>
-                        {/* <Image
-                            source={waterdrop}
-                            style={styles.tipImage}
-                        /> */}
                         <CheckBox
                             disabled={false}
                             checked={hasHumiditySensor}
                             onPress={() => { setHasHumiditySensor(!hasHumiditySensor) }}
-
-                        // style={styles.checkbox}
                         />
                         <Text style={styles.tipText}>
-                            {/* {plant.water_tips} */}
                             Possui sensor de umidade instalado?
                         </Text>
                     </View>
@@ -159,12 +207,7 @@ export function PlantSave() {
                        
                         <TextInput 
                                 keyboardType="numeric"
-                                style={[
-                                    styles.inputNumber
-                                    // (isFocused ) &&
-                                    // { borderColor: colors.white }
-                                ]}                                // onBlur={handleInputBlur}
-                                // onFocus={handleInputFocus}
+                                style={[ styles.inputNumber]}                                
                                 value={inputNumber+'%'}
                                 onChangeText={texte => onChanged(texte)}
                             />
@@ -281,6 +324,37 @@ const styles = StyleSheet.create({
         borderWidth:2,
         textAlign:'center',
         marginHorizontal:15
-    }
+    },
+    inputPlantName:{
+        borderBottomColor:colors.white,
+        borderBottomWidth:1,
+        color:colors.white,
+         width:'70%',
+        padding:4,
+        textAlign:"center",
+        fontSize:17,
+        marginTop:'15%'
+        
+    },
+    buttonStyle: {
+        borderWidth: 0,
+        height: 40,
+        marginLeft: 35,
+        marginRight: 35,
+        marginTop: 15,
+        alignItems:'center',    
+        marginBottom:25  ,
+        padding:2 ,
+        marginVertical:100
+      },
+
+      buttonTextStyle: {
+        color: '#FFFFFF',
+        fontSize: 20,
+      },
+      plusCicle:{
+        height:50,
+        width:50
+      },
     
 });

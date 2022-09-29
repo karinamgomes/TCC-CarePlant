@@ -30,6 +30,7 @@ export function Confirmation(){
     const {
         title,
         buttonTitle,
+        subtitle,
         nextScreen
     } = routes.params as Params;
     
@@ -54,8 +55,8 @@ export function Confirmation(){
                 </Text>
 
                 <Text style={styles.subtitle}>
-                    Que tal começar a cadastrar {'\n'}
-                    suas plantas?
+                    {subtitle}
+                    
                 </Text>                
 
                 <View style={styles.footer}>
