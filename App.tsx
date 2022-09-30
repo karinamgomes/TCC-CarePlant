@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import AppLoading from 'expo-app-loading';
 import * as Notifications from 'expo-notifications';
+import WebSocketSignalR from './src/signalR/WebSocketSignalR';
 
 import Routes  from './src/routes';
 import { PlantProps } from './src/libs/storage';
@@ -12,10 +13,19 @@ import {
 } from '@expo-google-fonts/jost';
 
 export default function App(){
+  const [socketConnectionReady, setSocketConnectionReady] = useState(false)
   const [ fontsLoaded ] = useFonts({
     Jost_400Regular,
     Jost_600SemiBold
   });
+
+  useEffect(() => {
+    if(!socketConnectionReady) {
+      WebSocketSignalR.initSocketConnection(() => {
+        setSocketConnectionReady(true)
+      })
+    }
+  }, [])
 
   useEffect(() => {
     Notifications.setNotificationHandler({
@@ -50,7 +60,8 @@ export default function App(){
   if(!fontsLoaded)
     return <AppLoading />
     
-  return (
+  return ( socketConnectionReady &&
     <Routes />
+    
   )
 }
