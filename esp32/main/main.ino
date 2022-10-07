@@ -85,7 +85,7 @@ void printHumidityPorcentage(int humidityPorcentage)
 
 int calcularPorcentagemUmidadeNoSolo(int soilValue)
 {
-    const int valorSeco = 3280;
+    const int valorSeco = 3361;
     const int valorMolhado = 1460;
     int porcentagemHumidade = map(soilValue, valorMolhado, valorSeco, 100, 0);
     return porcentagemHumidade;
