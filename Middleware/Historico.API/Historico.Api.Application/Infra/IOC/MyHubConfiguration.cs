@@ -19,9 +19,14 @@ namespace Historico.Api.Application.Infra.IOC
         //    return n;
         //}
 
-        public Notificacao Notificacoes(Notificacao n)
-        {
-            return n;
+        public async Task Notificacoes(CancellationToken cancellationToken)
+        {         
+            while (true)
+            {
+                string hora = DateTime.UtcNow.ToString();
+                await Clients.All.SendAsync("ReceiveMenssage", hora);
+                await Task.Delay(1000, cancellationToken);
+            }            
         }
     }
 }

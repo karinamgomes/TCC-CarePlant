@@ -1,4 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sitemanifest>
-  <IisApp path="C:\repos\CarePlant\Middleware\Historico.API\Historico.API\obj\Release\net6.0\PubTmp\Out\" />
+  <IisApp path="C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\obj\Release\net6.0\PubTmp\Out\" />
 </sitemanifest>

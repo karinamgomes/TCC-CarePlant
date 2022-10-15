@@ -1,33 +1,30 @@
 ﻿using AutoMapper;
 using Historico.Api.Application.DataTransferObjects.Request;
 using Historico.Api.Application.DataTransferObjects.Response;
+using Historico.Api.Application.Domain.Contracts.Service;
 using Historico.Api.Application.Infra.TableStorage;
 using Historico.Api.Application.Infra.TableStorage.Entity;
-using Serilog;
 using Microsoft.AspNetCore.Http;
-using Historico.Api.Application.Domain.Models;
-using Historico.Api.Application.Infra.IOC;
-using Historico.Api.Application.Domain.Contracts;
+using Serilog;
 
 namespace Historico.Api.Application.Service
 {
-    public class HistoricoService : IHistoricoService
+    public class PlantaService : IPlantaService
     {
-        public readonly ITableStorageBase _tableStorageBase;
+        public readonly IPlantaTableStorage _plantaTableStorage;
         private readonly IMapper _mapper;
 
-        public HistoricoService(ITableStorageBase tableStorageBase,
-            IMapper mapper)
+        public PlantaService(IPlantaTableStorage plantaTableStorage, IMapper mapper)
         {
-            _tableStorageBase = tableStorageBase;
+            _plantaTableStorage = plantaTableStorage;
             _mapper = mapper;
         }
 
-        public async Task<ResponseObject> GravarHistorico(TableStorageRequest historico)
+        public async Task<ResponseObject> GravarPlanta(PlantaRequest Planta)
         {
             try
             {
-                var tableExists = await _tableStorageBase.GetTable(historico.TableStorageName);
+                var tableExists = await _plantaTableStorage.GetTable(Planta.NomeTableStorage);
 
                 if (!tableExists)
                 {
@@ -36,11 +33,9 @@ namespace Historico.Api.Application.Service
                     return new ResponseObject() { StatusCode = StatusCodes.Status400BadRequest, Mensagem = mensage };
                 }
 
-                var mapResultado = _mapper.Map<TableStorageRequest, TableStorageEntity>(historico);
+                var mapResultado = _mapper.Map<PlantaRequest, PlantaEntity>(Planta);
 
-                await _tableStorageBase.CreateOrUpdate(mapResultado, historico.TableStorageName);
-
-                EnvioNotificacao(historico);
+                await _plantaTableStorage.CreateOrUpdate(mapResultado, Planta.NomeTableStorage);
 
                 return new ResponseObject() { StatusCode = StatusCodes.Status200OK, Mensagem = "Sucesso" };
             }
@@ -50,19 +45,11 @@ namespace Historico.Api.Application.Service
             }
         }
 
-        public Notificacao EnvioNotificacao(TableStorageRequest request)
-        {
-            var mapResultado = _mapper.Map<TableStorageRequest, Notificacao>(request);
-            new MyHubConfiguration().Notificacoes(CancellationToken.None);
-
-            return mapResultado; 
-        }
-
-        public async Task<ResponseObject> BuscarHistorico(string partitionKey, string tableStorageName)
+        public async Task<ResponseObject> BuscarPlanta(string partitionKey, string tableStorageName)
         {
             try
             {
-                var tableExists = await _tableStorageBase.GetTable(tableStorageName);
+                var tableExists = await _plantaTableStorage.GetTable(tableStorageName);
 
                 if (!tableExists)
                 {
@@ -71,7 +58,7 @@ namespace Historico.Api.Application.Service
                     return new ResponseObject() { StatusCode = StatusCodes.Status400BadRequest, Mensagem = mensage };
                 }
 
-                 var result = _tableStorageBase.Get<TableStorageEntity>(tableStorageName, partitionKey);
+                var result = _plantaTableStorage.Get<PlantaEntity>(tableStorageName, partitionKey);
 
                 return new ResponseObject() { StatusCode = StatusCodes.Status200OK, Mensagem = "Sucesso", Conteudo = result };
             }

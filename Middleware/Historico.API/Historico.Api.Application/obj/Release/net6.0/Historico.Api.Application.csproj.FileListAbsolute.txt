@@ -34,3 +34,15 @@ C:\repos\CarePlant\Middleware\Historico.API\Historico.Api.Application\obj\Releas
 C:\repos\CarePlant\Middleware\Historico.API\Historico.Api.Application\obj\Release\net6.0\refint\Historico.Api.Application.dll
 C:\repos\CarePlant\Middleware\Historico.API\Historico.Api.Application\obj\Release\net6.0\Historico.Api.Application.pdb
 C:\repos\CarePlant\Middleware\Historico.API\Historico.Api.Application\obj\Release\net6.0\ref\Historico.Api.Application.dll
+C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.Api.Application\bin\Release\net6.0\Historico.Api.Application.deps.json
+C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.Api.Application\bin\Release\net6.0\Historico.Api.Application.dll
+C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.Api.Application\bin\Release\net6.0\Historico.Api.Application.pdb
+C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.Api.Application\obj\Release\net6.0\Historico.Api.Application.csproj.AssemblyReference.cache
+C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.Api.Application\obj\Release\net6.0\Historico.Api.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.Api.Application\obj\Release\net6.0\Historico.Api.Application.AssemblyInfoInputs.cache
+C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.Api.Application\obj\Release\net6.0\Historico.Api.Application.AssemblyInfo.cs
+C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.Api.Application\obj\Release\net6.0\Historico.Api.Application.csproj.CoreCompileInputs.cache
+C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.Api.Application\obj\Release\net6.0\Historico.Api.Application.dll
+C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.Api.Application\obj\Release\net6.0\refint\Historico.Api.Application.dll
+C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.Api.Application\obj\Release\net6.0\Historico.Api.Application.pdb
+C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.Api.Application\obj\Release\net6.0\ref\Historico.Api.Application.dll

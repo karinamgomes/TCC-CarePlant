@@ -1,14 +1,10 @@
 ﻿using Historico.Api.Application.Domain.Contracts;
+using Historico.Api.Application.Domain.Contracts.Service;
 using Historico.Api.Application.Infra.TableStorage;
 using Historico.Api.Application.Service;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Historico.Api.Application.Infra.IOC
 {
@@ -32,9 +28,11 @@ namespace Historico.Api.Application.Infra.IOC
 
             //Repository
             services.AddTransient<ITableStorageBase, TableStorageBase>();
+            services.AddTransient<IPlantaTableStorage, PlantaTableStorage>();
 
             //Services
             services.AddTransient<IHistoricoService, HistoricoService>();
+            services.AddTransient<IPlantaService, PlantaService>();
 
             services.AddSingleton<TableStorageBase>();
             return services;
