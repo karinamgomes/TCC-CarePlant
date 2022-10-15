@@ -1,0 +1,104 @@
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\bin\Release\net6.0\appsettings.Development.json
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\bin\Release\net6.0\appsettings.json
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\bin\Release\net6.0\Historico.API.exe
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\bin\Release\net6.0\Historico.API.deps.json
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\bin\Release\net6.0\Historico.API.runtimeconfig.json
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\bin\Release\net6.0\Historico.API.dll
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\bin\Release\net6.0\Historico.API.pdb
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\bin\Release\net6.0\AutoMapper.dll
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\bin\Release\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\bin\Release\net6.0\Microsoft.OpenApi.dll
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\bin\Release\net6.0\Newtonsoft.Json.dll
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\bin\Release\net6.0\Serilog.dll
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\bin\Release\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\bin\Release\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\bin\Release\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\bin\Release\net6.0\Microsoft.WindowsAzure.Storage.dll
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\bin\Release\net6.0\Historico.Api.Application.dll
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\bin\Release\net6.0\Historico.Api.Application.pdb
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.csproj.AssemblyReference.cache
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.AssemblyInfoInputs.cache
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.AssemblyInfo.cs
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.csproj.CoreCompileInputs.cache
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\obj\Release\net6.0\staticwebassets.build.json
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\obj\Release\net6.0\staticwebassets.development.json
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\obj\Release\net6.0\scopedcss\bundle\Historico.API.styles.css
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.csproj.CopyComplete
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.dll
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\obj\Release\net6.0\refint\Historico.API.dll
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.pdb
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.genruntimeconfig.cache
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Desktop\Fernando\unip\TCC\Historico.API\Historico.API\obj\Release\net6.0\ref\Historico.API.dll
+C:\repos\TCC\Historico.API\Historico.API\bin\Release\net6.0\appsettings.Development.json
+C:\repos\TCC\Historico.API\Historico.API\bin\Release\net6.0\appsettings.json
+C:\repos\TCC\Historico.API\Historico.API\bin\Release\net6.0\Historico.API.exe
+C:\repos\TCC\Historico.API\Historico.API\bin\Release\net6.0\Historico.API.deps.json
+C:\repos\TCC\Historico.API\Historico.API\bin\Release\net6.0\Historico.API.runtimeconfig.json
+C:\repos\TCC\Historico.API\Historico.API\bin\Release\net6.0\Historico.API.dll
+C:\repos\TCC\Historico.API\Historico.API\bin\Release\net6.0\Historico.API.pdb
+C:\repos\TCC\Historico.API\Historico.API\bin\Release\net6.0\AutoMapper.dll
+C:\repos\TCC\Historico.API\Historico.API\bin\Release\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\repos\TCC\Historico.API\Historico.API\bin\Release\net6.0\Microsoft.OpenApi.dll
+C:\repos\TCC\Historico.API\Historico.API\bin\Release\net6.0\Newtonsoft.Json.dll
+C:\repos\TCC\Historico.API\Historico.API\bin\Release\net6.0\Serilog.dll
+C:\repos\TCC\Historico.API\Historico.API\bin\Release\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\repos\TCC\Historico.API\Historico.API\bin\Release\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\repos\TCC\Historico.API\Historico.API\bin\Release\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\repos\TCC\Historico.API\Historico.API\bin\Release\net6.0\Microsoft.WindowsAzure.Storage.dll
+C:\repos\TCC\Historico.API\Historico.API\bin\Release\net6.0\Historico.Api.Application.dll
+C:\repos\TCC\Historico.API\Historico.API\bin\Release\net6.0\Historico.Api.Application.pdb
+C:\repos\TCC\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.csproj.AssemblyReference.cache
+C:\repos\TCC\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.GeneratedMSBuildEditorConfig.editorconfig
+C:\repos\TCC\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.AssemblyInfoInputs.cache
+C:\repos\TCC\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.AssemblyInfo.cs
+C:\repos\TCC\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.csproj.CoreCompileInputs.cache
+C:\repos\TCC\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.MvcApplicationPartsAssemblyInfo.cs
+C:\repos\TCC\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.MvcApplicationPartsAssemblyInfo.cache
+C:\repos\TCC\Historico.API\Historico.API\obj\Release\net6.0\staticwebassets.build.json
+C:\repos\TCC\Historico.API\Historico.API\obj\Release\net6.0\staticwebassets.development.json
+C:\repos\TCC\Historico.API\Historico.API\obj\Release\net6.0\scopedcss\bundle\Historico.API.styles.css
+C:\repos\TCC\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.csproj.CopyComplete
+C:\repos\TCC\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.dll
+C:\repos\TCC\Historico.API\Historico.API\obj\Release\net6.0\refint\Historico.API.dll
+C:\repos\TCC\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.pdb
+C:\repos\TCC\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.genruntimeconfig.cache
+C:\repos\TCC\Historico.API\Historico.API\obj\Release\net6.0\ref\Historico.API.dll
+C:\repos\TCC\Historico.API\Historico.API\bin\Release\net6.0\Dapper.dll
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\bin\Release\net6.0\appsettings.Development.json
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\bin\Release\net6.0\appsettings.json
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\bin\Release\net6.0\Historico.API.exe
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\bin\Release\net6.0\Historico.API.deps.json
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\bin\Release\net6.0\Historico.API.runtimeconfig.json
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\bin\Release\net6.0\Historico.API.dll
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\bin\Release\net6.0\Historico.API.pdb
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\bin\Release\net6.0\AutoMapper.dll
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\bin\Release\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\bin\Release\net6.0\Dapper.dll
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\bin\Release\net6.0\Microsoft.OpenApi.dll
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\bin\Release\net6.0\Newtonsoft.Json.dll
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\bin\Release\net6.0\Serilog.dll
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\bin\Release\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\bin\Release\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\bin\Release\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\bin\Release\net6.0\Microsoft.WindowsAzure.Storage.dll
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\bin\Release\net6.0\Historico.Api.Application.dll
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\bin\Release\net6.0\Historico.Api.Application.pdb
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.csproj.AssemblyReference.cache
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.GeneratedMSBuildEditorConfig.editorconfig
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.AssemblyInfoInputs.cache
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.AssemblyInfo.cs
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.csproj.CoreCompileInputs.cache
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.MvcApplicationPartsAssemblyInfo.cs
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.MvcApplicationPartsAssemblyInfo.cache
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\obj\Release\net6.0\staticwebassets.build.json
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\obj\Release\net6.0\staticwebassets.development.json
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\obj\Release\net6.0\scopedcss\bundle\Historico.API.styles.css
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.csproj.CopyComplete
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.dll
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\obj\Release\net6.0\refint\Historico.API.dll
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.pdb
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.genruntimeconfig.cache
+C:\repos\CarePlant\Middleware\Historico.API\Historico.API\obj\Release\net6.0\ref\Historico.API.dll
