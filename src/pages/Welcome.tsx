@@ -21,7 +21,7 @@ export function Welcome() {
 
     async function handleStart(){
         
-        //await AsyncStorage.removeItem('@plantmanager:user')
+        // await AsyncStorage.removeItem('@plantmanager:user')
 
         console.log(await AsyncStorage.getItem('@plantmanager:user'))
         let UserName = await AsyncStorage.getItem('@plantmanager:user')

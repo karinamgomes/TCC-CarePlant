@@ -50,7 +50,7 @@ export function UserIdentification() {
             navigation.navigate('Confirmation'as never, {
                 title: 'Pronto!',
                 buttonTitle: 'Cadastrar',
-                nextScreen: 'PlantSave',    
+                nextScreen: 'MyPlants',
             }as never);        
         }catch{
             Alert.alert('Não foi possível salvar o seu nome. Tente novamente mais tarde!');
