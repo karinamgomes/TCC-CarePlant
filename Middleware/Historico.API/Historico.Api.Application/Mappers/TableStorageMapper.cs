@@ -16,6 +16,7 @@ namespace Historico.Api.Application.Mappers
         {
             CreateMap<TableStorageRequest, TableStorageEntity>().ReverseMap();
             CreateMap<TableStorageRequest, Notificacao>().ReverseMap();
+            CreateMap<PlantaRequest, PlantaEntity>().ReverseMap();
         }
     }
 }
