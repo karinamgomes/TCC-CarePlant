@@ -1,4 +1,5 @@
-﻿using Historico.Api.Application.Infra.TableStorage.Entity;
+﻿using Historico.Api.Application.DataTransferObjects.Request;
+using Historico.Api.Application.Infra.TableStorage.Entity;
 using Microsoft.WindowsAzure.Storage.Table;
 using System;
 using System.Collections.Generic;
@@ -61,6 +62,15 @@ namespace Historico.Api.Application.Infra.TableStorage
             {
                 throw;
             }
+        }
+
+        public async Task Delete(DeletePlantaRequest table)
+        {
+            var operation = TableOperation.Delete(table);
+
+            CloudTable cloudTable = _tableClient.GetTableReference(table.NomeTableStorage);
+
+            await cloudTable.ExecuteAsync(operation);
         }
     }
 }

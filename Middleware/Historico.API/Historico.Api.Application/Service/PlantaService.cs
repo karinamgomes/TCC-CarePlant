@@ -5,6 +5,7 @@ using Historico.Api.Application.Domain.Contracts.Service;
 using Historico.Api.Application.Infra.TableStorage;
 using Historico.Api.Application.Infra.TableStorage.Entity;
 using Microsoft.AspNetCore.Http;
+using Microsoft.WindowsAzure.Storage.Table;
 using Serilog;
 
 namespace Historico.Api.Application.Service
@@ -61,6 +62,31 @@ namespace Historico.Api.Application.Service
                 var result = _plantaTableStorage.Get<PlantaEntity>(tableStorageName, partitionKey);
 
                 return new ResponseObject() { StatusCode = StatusCodes.Status200OK, Mensagem = "Sucesso", Conteudo = result };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseObject() { StatusCode = StatusCodes.Status400BadRequest, Mensagem = ex.Message };
+            }
+        }
+
+        public async Task<ResponseObject> DeletePlanta(DeletePlantaRequest Planta)
+        {
+            try
+            {
+                var tableExists = await _plantaTableStorage.GetTable(Planta.NomeTableStorage);
+
+                if (!tableExists)
+                {
+                    var mensage = "Tabela não encontrada no Storage Account";
+                    Log.Error(mensage);
+                    return new ResponseObject() { StatusCode = StatusCodes.Status400BadRequest, Mensagem = mensage };
+                }
+
+                //var mapResultado = _mapper.Map<DeletePlantaRequest, PlantaEntity>(Planta);
+
+                await _plantaTableStorage.Delete(Planta);
+
+                return new ResponseObject() { StatusCode = StatusCodes.Status200OK, Mensagem = "Sucesso" };
             }
             catch (Exception ex)
             {
