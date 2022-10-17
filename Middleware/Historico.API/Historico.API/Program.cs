@@ -14,12 +14,12 @@ builder.Services.AddControllers();
 
 builder.Services.AddSignalR();
 
-builder.Services.AddSwaggerGen(options =>
-{
-    // using System.Reflection;
-    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
-});
+//builder.Services.AddSwaggerGen(options =>
+//{
+//    // using System.Reflection;
+//    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+//    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+//});
 
 builder.Services.ConfigureAutoMapper();
 builder.Services.ConfigureDependencies(builder.Configuration);

@@ -80,5 +80,36 @@ namespace Historico.Api.Application.Service
                 return new ResponseObject() { StatusCode = StatusCodes.Status400BadRequest, Mensagem = ex.Message };
             }
         }
+
+        public async Task<ResponseObject> BuscarNotificacao(string partitionKey, string tableStorageName)
+        {
+            try
+            {
+                var tableExists = await _tableStorageBase.GetTable(tableStorageName);
+
+                if (!tableExists)
+                {
+                    var mensage = "Tabela não encontrada no Storage Account";
+                    Log.Error(mensage);
+                    return new ResponseObject() { StatusCode = StatusCodes.Status400BadRequest, Mensagem = mensage };
+                }
+
+                List<TableStorageEntity> result = await _tableStorageBase.GetNotificacao<TableStorageEntity>(tableStorageName, partitionKey);
+                if(result.Count == 0)
+                    return new ResponseObject() { StatusCode = StatusCodes.Status200OK, Mensagem = "Não tem notificações", Conteudo = result };
+
+                foreach (var entity in result)
+                {
+                    entity.Notificado = true;
+                    await _tableStorageBase.CreateOrUpdate(entity, tableStorageName);
+                }
+
+                return new ResponseObject() { StatusCode = StatusCodes.Status200OK, Mensagem = "Sucesso", Conteudo = result };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseObject() { StatusCode = StatusCodes.Status400BadRequest, Mensagem = ex.Message };
+            }
+        }
     }
 }

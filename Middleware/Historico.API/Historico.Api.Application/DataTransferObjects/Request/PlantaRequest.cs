@@ -10,8 +10,11 @@ namespace Historico.Api.Application.DataTransferObjects.Request
     public class PlantaRequest : TableEntity
     {
         public string Nome { get; set; }
-        public int NivelDeUmidade { get; set; } 
+        public int NivelDeUmidade { get; set; }
         public string NomeTableStorage { get; set; }
-        public string CodigoSensor { get; set; }
+        public string? CodigoSensor { get; set; }
+        public DateTime? DataAlarme { get; set; }
+        public bool Sensor { get; set; }
+        public string UrlFotoPlanta { get; set; }
     }
 }
