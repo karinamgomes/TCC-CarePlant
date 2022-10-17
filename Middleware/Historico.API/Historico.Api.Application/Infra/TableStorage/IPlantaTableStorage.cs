@@ -14,6 +14,7 @@ namespace Historico.Api.Application.Infra.TableStorage
         Task CreateOrUpdate(PlantaEntity entity, string table);
         Task<bool> GetTable(string table);
         Task<List<T>> Get<T>(string tableStorageName, string partitionKey) where T : PlantaEntity, new();
+        Task<List<T>> GetNivelUmidade<T>(string tableStorageName, string partitionKey, string rowKey) where T : PlantaEntity, new();
         Task Delete(DeletePlantaRequest entity);
     }
 }

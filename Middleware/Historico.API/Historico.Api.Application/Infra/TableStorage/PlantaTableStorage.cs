@@ -72,5 +72,33 @@ namespace Historico.Api.Application.Infra.TableStorage
 
             await cloudTable.ExecuteAsync(operation);
         }
+
+        public async Task<List<T>> GetNivelUmidade<T>(string tableStorageName, string partitionKey, string rowKey) where T : PlantaEntity, new()
+        {
+            TableQuery<T> tableQuery = new TableQuery<T>().Where(
+            TableQuery.CombineFilters(
+                TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, partitionKey),
+                TableOperators.And,
+                TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, rowKey)));
+
+            TableContinuationToken continuationToken = null;
+
+            List<T> historico = new List<T>();
+
+            CloudTable cloudTable = _tableClient.GetTableReference(tableStorageName);
+
+            do
+            {
+                Task<TableQuerySegment<T>> task = cloudTable.ExecuteQuerySegmentedAsync(tableQuery, continuationToken);
+
+                TableQuerySegment<T> querySegment = task.Result;
+
+                historico.AddRange(querySegment.ToList());
+                continuationToken = querySegment.ContinuationToken;
+
+            } while (continuationToken != null);
+
+            return historico;
+        }
     }
 }

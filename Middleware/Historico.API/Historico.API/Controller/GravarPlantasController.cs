@@ -71,5 +71,26 @@ namespace Historico.API.Controller
 
             return new ObjectResult(resultado) { StatusCode = resultado.StatusCode, Value = resultado };
         }
+
+
+        /// <summary>
+        /// Busca as plantas.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo de request:
+        ///
+        /// </remarks>
+        /// <response code="200">Sucesso.</response>
+        /// <response code="400">Erros de validações.</response>
+        /// <response code="500">Erro interno no servidor.</response>
+
+        [HttpGet]
+        [Route("Nivel")]
+        public async Task<IActionResult> BuscarNivelUmidade([FromHeader] string partitionKey, string rowKey, string tableStorageName)
+        {
+            var resultado = await _plantaService.BuscarNivel(partitionKey, rowKey, tableStorageName);
+
+            return new ObjectResult(resultado) { StatusCode = resultado.StatusCode, Value = resultado };
+        }
     }
 }

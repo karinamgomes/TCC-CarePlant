@@ -73,5 +73,6 @@ namespace Historico.API.Controller
 
             return new ObjectResult(resultado) { StatusCode = resultado.StatusCode, Value = resultado };
         }
+
     }
 }

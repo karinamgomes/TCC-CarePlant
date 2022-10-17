@@ -93,5 +93,28 @@ namespace Historico.Api.Application.Service
                 return new ResponseObject() { StatusCode = StatusCodes.Status400BadRequest, Mensagem = ex.Message };
             }
         }
+
+        public async Task<ResponseObject> BuscarNivel(string partitionKey, string rowKey, string tableStorageName)
+        {
+            try
+            {
+                var tableExists = await _plantaTableStorage.GetTable(tableStorageName);
+
+                if (!tableExists)
+                {
+                    var mensage = "Tabela não encontrada no Storage Account";
+                    Log.Error(mensage);
+                    return new ResponseObject() { StatusCode = StatusCodes.Status400BadRequest, Mensagem = mensage };
+                }
+
+                var result = _plantaTableStorage.GetNivelUmidade<PlantaEntity>(tableStorageName, partitionKey, rowKey);
+
+                return new ResponseObject() { StatusCode = StatusCodes.Status200OK, Mensagem = "Sucesso", Conteudo = result };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseObject() { StatusCode = StatusCodes.Status400BadRequest, Mensagem = ex.Message };
+            }
+        }
     }
 }

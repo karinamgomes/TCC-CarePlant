@@ -87,6 +87,5 @@ namespace Historico.Api.Application.Infra.TableStorage
 
             return historico;
         }
-
     }
 }
