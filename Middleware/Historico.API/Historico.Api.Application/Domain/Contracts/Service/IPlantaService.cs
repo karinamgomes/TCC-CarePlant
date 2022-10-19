@@ -1,5 +1,6 @@
 ﻿using Historico.Api.Application.DataTransferObjects.Request;
 using Historico.Api.Application.DataTransferObjects.Response;
+using Microsoft.WindowsAzure.Storage.Table;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,7 @@ namespace Historico.Api.Application.Domain.Contracts.Service
     {
         Task<ResponseObject> GravarPlanta(PlantaRequest Planta);
         Task<ResponseObject> BuscarPlanta(string partitionKey, string tableStorageName);
+        Task<ResponseObject> BuscarNivel(string partitionKey, string rowKey, string tableStorageName);
+        Task<ResponseObject> DeletePlanta(DeletePlantaRequest Planta);
     }
 }

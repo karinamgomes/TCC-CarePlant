@@ -2,6 +2,7 @@ using Historico.Api.Application.Infra.IOC;
 using System.Net.WebSockets;
 using System.Net;
 using System.Text;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +16,7 @@ builder.Services.AddSignalR();
 
 //builder.Services.AddSwaggerGen(options =>
 //{
-//    // using System.Reflection;
+//    //using System.Reflection;
 //    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
 //    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 //});
@@ -37,12 +38,12 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-//app.UseSwagger();
-//app.UseSwaggerUI(c =>
-//{
-//    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-//    c.RoutePrefix = string.Empty;
-//});
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+    c.RoutePrefix = string.Empty;
+});
 
 app.UseHttpsRedirection();
 

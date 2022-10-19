@@ -1,4 +1,5 @@
-﻿using Historico.Api.Application.Infra.TableStorage.Entity;
+﻿using Historico.Api.Application.DataTransferObjects.Request;
+using Historico.Api.Application.Infra.TableStorage.Entity;
 using Microsoft.WindowsAzure.Storage.Table;
 using System;
 using System.Collections.Generic;
@@ -61,6 +62,43 @@ namespace Historico.Api.Application.Infra.TableStorage
             {
                 throw;
             }
+        }
+
+        public async Task Delete(DeletePlantaRequest table)
+        {
+            var operation = TableOperation.Delete(table);
+
+            CloudTable cloudTable = _tableClient.GetTableReference(table.NomeTableStorage);
+
+            await cloudTable.ExecuteAsync(operation);
+        }
+
+        public async Task<List<T>> GetNivelUmidade<T>(string tableStorageName, string partitionKey, string rowKey) where T : PlantaEntity, new()
+        {
+            TableQuery<T> tableQuery = new TableQuery<T>().Where(
+            TableQuery.CombineFilters(
+                TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, partitionKey),
+                TableOperators.And,
+                TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, rowKey)));
+
+            TableContinuationToken continuationToken = null;
+
+            List<T> historico = new List<T>();
+
+            CloudTable cloudTable = _tableClient.GetTableReference(tableStorageName);
+
+            do
+            {
+                Task<TableQuerySegment<T>> task = cloudTable.ExecuteQuerySegmentedAsync(tableQuery, continuationToken);
+
+                TableQuerySegment<T> querySegment = task.Result;
+
+                historico.AddRange(querySegment.ToList());
+                continuationToken = querySegment.ContinuationToken;
+
+            } while (continuationToken != null);
+
+            return historico;
         }
     }
 }

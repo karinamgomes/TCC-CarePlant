@@ -12,5 +12,8 @@ namespace Historico.Api.Application.Infra.TableStorage.Entity
         public string Nome { get; set; }
         public int NivelDeUmidade { get; set; }
         public string CodigoSensor { get; set; }
+        public DateTime? DataAlarme { get; set; }
+        public bool Sensor { get; set; }
+        public string UrlFotoPlanta { get; set; }
     }
 }

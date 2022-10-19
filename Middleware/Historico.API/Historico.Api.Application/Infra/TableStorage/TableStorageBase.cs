@@ -28,10 +28,10 @@ namespace Historico.Api.Application.Infra.TableStorage
             return await _tableClient.GetTableReference(table).ExistsAsync();
         }
 
-        public async Task<List<T>> Get<T>(string tableStorageName, string partitionKey) where T : TableStorageEntity, new ()
+        public async Task<List<T>> Get<T>(string tableStorageName, string partitionKey) where T : TableStorageEntity, new()
         {
             try
-            { 
+            {
                 TableQuery<T> tableQuery = new TableQuery<T>()
                 .Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, partitionKey));
 
@@ -57,8 +57,35 @@ namespace Historico.Api.Application.Infra.TableStorage
             catch (Exception ex)
             {
                 throw;
-            }            
+            }
         }
 
+        public async Task<List<T>> GetNotificacao<T>(string tableStorageName, string partitionKey) where T : TableStorageEntity, new()
+        {            
+            TableQuery<T> tableQuery = new TableQuery<T>().Where(
+            TableQuery.CombineFilters(
+                TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, partitionKey), 
+                TableOperators.And, 
+                TableQuery.GenerateFilterConditionForBool("Notificado", QueryComparisons.Equal, false)));
+
+            TableContinuationToken continuationToken = null;
+
+            List<T> historico = new List<T>();
+
+            CloudTable cloudTable = _tableClient.GetTableReference(tableStorageName);
+
+            do
+            {
+                Task<TableQuerySegment<T>> task = cloudTable.ExecuteQuerySegmentedAsync(tableQuery, continuationToken);
+
+                TableQuerySegment<T> querySegment = task.Result;
+
+                historico.AddRange(querySegment.ToList());
+                continuationToken = querySegment.ContinuationToken;
+
+            } while (continuationToken != null);
+
+            return historico;
+        }
     }
 }
