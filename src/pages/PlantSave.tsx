@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Alert,
     StyleSheet,
@@ -9,7 +9,8 @@ import {
     Platform,
     TouchableOpacity,
     TextInput,
-    Dimensions
+    Dimensions,
+    Button as Cutton
 } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import { SvgFromUri } from 'react-native-svg';
@@ -17,7 +18,7 @@ import { getBottomSpace } from 'react-native-iphone-x-helper';
 import { useNavigation, useRoute } from '@react-navigation/core';
 import DateTimePicker, { Event } from '@react-native-community/datetimepicker';
 import { format, isBefore } from 'date-fns';
-import { PlantProps, savePlant } from '../libs/storage';
+import { PlantProps } from '../libs/storage';
 
 import { Button } from '../components/Button';
 
@@ -26,6 +27,9 @@ import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 import * as ImagePicker from 'expo-image-picker';
 import teste from '../assets/plus-circle.png';
+import { Formik, useFormik, withFormik } from 'formik';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface Params {
     plant: PlantProps
@@ -36,13 +40,11 @@ export function PlantSave() {
     const [showDatePicker, setShowDatePicker] = useState(Platform.OS == 'ios');
     const [hasHumiditySensor, setHasHumiditySensor] = useState(false);
     const [inputNumber, setInputNumber] = useState<any>(0);
-
     const route = useRoute();
-    const { plant } = route.params as Params;
 
     const navigation = useNavigation();
 
-    function handleChangeTime(event: Event, dateTime: Date | undefined) {
+    function handleChangeTime(dateTime: Date) {
         if (Platform.OS === 'android') {
             setShowDatePicker(oldState => !oldState);
         }
@@ -53,7 +55,7 @@ export function PlantSave() {
         }
 
         if (dateTime)
-            setSelectedDateTime(dateTime);
+            setSelectedDateTime(dateTime!);
     }
 
     function handleOpenDatetimePickerForAndroid() {
@@ -61,22 +63,25 @@ export function PlantSave() {
     }
 
     async function handleSave() {
-        try {
-            await savePlant({
-                ...plant,
-                dateTimeNotification: selectedDateTime
-            });
+        // try {
+        //     console.log("plant:")
+        //     console.log(plant)
+        //     await savePlant({
+        //         ...plant,
+        //         dateTimeNotification: selectedDateTime
+        //     });
 
-            navigation.navigate('Confirmation' as never, {
-                title: 'Tudo certo',
-                subtitle: `Cadastro de ${plant.name} realizado com sucesso.`,
-                buttonTitle: 'Minhas plantas',
-                nextScreen: 'MyPlants',
-            } as never);
+        //     navigation.navigate('Confirmation' as never, {
+        //         title: 'Tudo certo',
+        //         subtitle: `Cadastro de ${plant.name} realizado com sucesso.`,
+        //         buttonTitle: 'Minhas plantas',
+        //         nextScreen: 'MyPlants',
+        //     } as never);
 
-        } catch {
-            Alert.alert('Não foi possível salvar.');
-        }
+        // } catch(err) {
+        //     Alert.alert('Não foi possível salvar.');
+        //     console.log(err)
+        // }
     }
 
     function onChanged (text:any) {
@@ -119,17 +124,75 @@ export function PlantSave() {
         aspect: [4, 3],
         quality: 1,
       });
-    
+      console.log("result")
+      //@ts-ignore
+      console.log(result.uri)
+      let uri = ""
       if (!result.cancelled) {
         setImage(result.uri);
+        uri=result.uri
       }
+      return uri
     };
 
-    return (
+    // const { handleChange, handleSubmit, values } = useFormik({
+    //     initialValues: {urlImage:'', name: '', hasHumiditySensor: '',  dateNotification: new Date(), level:"" },
+    //     onSubmit: values =>
+    //         {console.log(values)
+    //       alert(`nome: ${values.name}, hasHumiditySensor: ${values.hasHumiditySensor}`)}
+    //   });
+    
+    const getNameUser = async()=>{
+        const name = await AsyncStorage.getItem('@plantmanager:user')
+        return name
+    }
+
+   return (
+    <Formik initialValues={{urlImage:'', name: '', hasHumiditySensor: false,  dateNotification: new Date(), level:"" }} 
+    onSubmit={async (values)=>{
+        try{
+            //TODO: ver se vai colocar campo IDSensor
+            var dataGravarPlantas = {
+                partitionKey: await getNameUser(),
+                rowKey: values.name,
+                nome: values.name,
+                nivelDeUmidade: values.hasHumiditySensor ? parseInt(values.level) : 0,
+                nomeTableStorage: "Planta",
+                sensor:values.hasHumiditySensor?true:false,
+                codigoSensor: "94:B5:55:2B:67:90",
+                urlFotoPlanta: image,
+            }
+
+            console.log("dataGravarPlantas")
+            console.log(dataGravarPlantas)
+
+            axios({
+                method: 'put',
+                url: 'https://middleware-arduino.azurewebsites.net/GravarPlantas',
+                data: dataGravarPlantas
+              }).then((response) => {
+                console.log(response.data);
+                navigation.navigate('Confirmation' as never, {
+                    title: 'Tudo certo',
+                    subtitle: `Cadastro de ${values.name} realizado com sucesso.`,
+                    buttonTitle: 'Minhas plantas',
+                    nextScreen: 'MyPlants',
+                } as never);
+            
+            });
+    
+              
+
+        }catch(err){ alert(err)}
+        
+
+        }}>
+        {({ handleChange, handleBlur, handleSubmit,setFieldValue, values }) => (
         <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.scrollListContainer}
         >
+            
             <View style={styles.container}>
                 <View style={styles.plantInfo}>
 
@@ -138,7 +201,8 @@ export function PlantSave() {
                     {!image &&<TouchableOpacity
                         style={styles.buttonStyle}
                         activeOpacity={0.5}
-                        onPress={pickImage}>
+                        // onPress={()=>{pickImage(); handleChange('urlImage')}}>
+                        onPress={() =>{ setFieldValue('urlImage', pickImage())}}>
                         <Image
                         source={teste}
                         style={styles.plusCicle}  
@@ -150,16 +214,23 @@ export function PlantSave() {
                         style={styles.inputPlantName}
                         placeholder='Nome da Planta'
                         placeholderTextColor={colors.white}
-                        onChangeText={texte => onChanged(texte)}
+                        onChangeText={handleChange('name')}
+                        onBlur={handleBlur('name')}
+                        value={values.name}
                     />
                 </View>
 
                 <View style={styles.controller}>
                     <View style={styles.tipContainer}>
                         <CheckBox
-                            disabled={false}
-                            checked={hasHumiditySensor}
-                            onPress={() => { setHasHumiditySensor(!hasHumiditySensor) }}
+                            // disabled={false}
+                            // checked={hasHumiditySensor}
+                            checked={values?.hasHumiditySensor}
+                            onPress={() => {setHasHumiditySensor(!values?.hasHumiditySensor);setFieldValue('hasHumiditySensor', !values?.hasHumiditySensor)}}
+
+
+                            // onBlur={handleBlur('hasHumiditySensor')}
+                            // ={values.hasHumiditySensor}
                         />
                         <Text style={styles.tipText}>
                             Possui sensor de umidade instalado?
@@ -175,8 +246,12 @@ export function PlantSave() {
                         <DateTimePicker
                             value={selectedDateTime}
                             mode="time"
-                            display="spinner"
-                            onChange={() => handleChangeTime}
+                            is24Hour={true}
+                            display="default"
+                            onChange={(event,date)=>{
+                                handleChangeTime(date!)
+                                setFieldValue('dateNotification', new Date(date!))
+                            }}
                         />
                     )}
 
@@ -209,20 +284,27 @@ export function PlantSave() {
                                 keyboardType="numeric"
                                 style={[ styles.inputNumber]}                                
                                 value={inputNumber+'%'}
-                                onChangeText={texte => onChanged(texte)}
+                                onChangeText={texte => {onChanged(texte); setFieldValue('level', texte)}}
+                                onBlur={handleBlur('level')}
+                                // value={values.level}
                             />
 
                     </View>
-}
+                    }
 
                     <Button
                         title="Cadastrar nova planta"
-                        onPress={handleSave}
+                        onPress={()=>handleSubmit()}
                     />
                 </View>
             </View>
         </ScrollView>
+            )}
+        </Formik>
     )
+
+    
+    
 }
 
 const styles = StyleSheet.create({

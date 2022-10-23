@@ -17,12 +17,38 @@ import { Button } from '../components/Button';
 import waterdrop from '../assets/waterdrop.png';
 import PlantaFake from '../assets/PlantaFake.png';
 import water from '../assets/water.png';
+import axios from 'axios';
 
 interface Params {
     plant: PlantProps
 }
 export function PlantStatus() {
+    const [umidade, setUmidade] = useState<number>(0);
 
+    const getStatusPlant = async () => {
+        try {
+            axios({
+                method: 'get',
+                url: 'https://middleware-arduino.azurewebsites.net/TableStorage/Notificacao?tableStorageName=HistoricoUmidade',
+                headers: {
+                    accept: '/',
+                    partitionKey: "94:B5:55:2B:67:90"
+                }
+            }).then((response) => {
+                console.log("response***************************")
+                // console.log(response)
+                console.log(response.request._response)
+                // const tonhao = response.request._response.conteudo
+                // const umidade = tonhao.length >= 0 ? tonhao : []
+                // setUmidade(umidade)
+            });
+        } catch (err) {
+            // alert.Alert("erro ao carregar nível de umidade")
+            return err
+        }
+    }
+
+    useEffect(()=>{getStatusPlant()},[])
     return (
         // <Animated.View style={styles.container}>
             <ImageBackground source={water} style={styles.container} imageStyle= 
@@ -39,7 +65,7 @@ export function PlantStatus() {
                         source={waterdrop}
                         style={styles.spotlightImage}    
                     />
-                    <Text style={styles.waterLeveText} >  85%</Text>
+                    <Text style={styles.waterLeveText} > {umidade} %</Text>
                 </View>
                 <View>
                     <Text>Horário da regagem</Text>

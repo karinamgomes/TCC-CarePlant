@@ -23,6 +23,7 @@ export function Welcome() {
         
         // await AsyncStorage.removeItem('@plantmanager:user')
 
+        console.log("await AsyncStorage.getItem('@plantmanager:user')")
         console.log(await AsyncStorage.getItem('@plantmanager:user'))
         let UserName = await AsyncStorage.getItem('@plantmanager:user')
         if(!UserName){
@@ -35,6 +36,7 @@ export function Welcome() {
     }
 
     const teste = AsyncStorage.getItem("@plantmanager:user");
+    console.log("JSON.stringify(teste)")
     console.log(JSON.stringify(teste))
 
     return (
