@@ -53,7 +53,7 @@ namespace Historico.Api.Application.Service
         public Notificacao EnvioNotificacao(TableStorageRequest request)
         {
             var mapResultado = _mapper.Map<TableStorageRequest, Notificacao>(request);
-            new MyHubConfiguration().Notificacoes(CancellationToken.None);
+            new ChatHub().SendMenssage("teste", "teste");
 
             return mapResultado; 
         }
