@@ -1,3 +1,5 @@
+using Microsoft.AspNet.SignalR;
+using System.Net.NetworkInformation;
 using testeSocket;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,5 +33,6 @@ app.UseEndpoints(endpoints =>
     endpoints.MapRazorPages();
     endpoints.MapHub<ChatHub>("/chatHub");
 });
+
 
 app.Run();
