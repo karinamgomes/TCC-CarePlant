@@ -113,13 +113,9 @@ C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\bin\Debug\net6.0\A
 C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\bin\Debug\net6.0\Dapper.dll
 C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\bin\Debug\net6.0\Dapper.Contrib.dll
-C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\bin\Debug\net6.0\Microsoft.OpenApi.dll
 C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\bin\Debug\net6.0\MySqlConnector.dll
 C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\bin\Debug\net6.0\Newtonsoft.Json.dll
 C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\bin\Debug\net6.0\Serilog.dll
-C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
-C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
-C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\bin\Debug\net6.0\Microsoft.WindowsAzure.Storage.dll
 C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\bin\Debug\net6.0\WindowsAzure.StorageExtensions.dll
 C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\bin\Debug\net6.0\Historico.Api.Application.dll
@@ -129,7 +125,6 @@ C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\obj\Debug\net6.0\H
 C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\obj\Debug\net6.0\Historico.API.AssemblyInfoInputs.cache
 C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\obj\Debug\net6.0\Historico.API.AssemblyInfo.cs
 C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\obj\Debug\net6.0\Historico.API.csproj.CoreCompileInputs.cache
-C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\obj\Debug\net6.0\Historico.API.MvcApplicationPartsAssemblyInfo.cs
 C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\obj\Debug\net6.0\Historico.API.MvcApplicationPartsAssemblyInfo.cache
 C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\obj\Debug\net6.0\staticwebassets.build.json
 C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\obj\Debug\net6.0\staticwebassets.development.json
@@ -140,3 +135,4 @@ C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\obj\Debug\net6.0\r
 C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\obj\Debug\net6.0\Historico.API.pdb
 C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\obj\Debug\net6.0\Historico.API.genruntimeconfig.cache
 C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\obj\Debug\net6.0\ref\Historico.API.dll
+C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\bin\Debug\net6.0\System.Net.WebSockets.WebSocketProtocol.dll

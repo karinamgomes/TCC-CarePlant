@@ -38,16 +38,20 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseSwagger();
-app.UseSwaggerUI(c =>
-{
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-    c.RoutePrefix = string.Empty;
-});
+//app.UseSwagger();
+//app.UseSwaggerUI(c =>
+//{
+//    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+//    c.RoutePrefix = string.Empty;
+//});
 
 app.UseHttpsRedirection();
 
-app.MapHub<MyHubConfiguration>("/notificacoes");
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapRazorPages();
+    endpoints.MapHub<ChatHub>("/chatHub");
+});
 
 app.UseStaticFiles();
 
@@ -55,6 +59,5 @@ app.UseRouting();
 
 app.UseAuthorization();
 app.MapControllers();
-app.MapRazorPages();
 
 app.Run();
