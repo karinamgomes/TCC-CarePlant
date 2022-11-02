@@ -325,9 +325,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: colors.baseGreen,
-            height: Dimensions.get('window').height * 0.4
-        
-
+        height: Dimensions.get('window').height * 0.4    
     },
     controller: {
         backgroundColor: colors.white,

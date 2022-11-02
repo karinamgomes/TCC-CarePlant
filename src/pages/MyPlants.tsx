@@ -17,7 +17,7 @@ import fonts from '../styles/fonts';
 import { PlantCardSecondary } from '../components/PlantCardSecondary';
 import { Load } from '../components/Load';
 import { Button } from '../components/Button';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
@@ -25,6 +25,7 @@ export function MyPlants() {
     const [myPlants, setMyPlants] = useState<PlantProps[]>([]);
     const [loading, setLoading] = useState(true);
     const navigation = useNavigation();
+    const routes = useRoute();
 
     function handlePlantSelect(plant: PlantProps) {
         navigation.navigate('PlantStatus' as never, { plant } as never);
@@ -100,7 +101,7 @@ export function MyPlants() {
     }
     useEffect(() => {
         getPlants()
-    }, [])
+    }, [routes.params])
 
     if (loading) return <Load />
 
