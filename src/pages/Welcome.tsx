@@ -19,10 +19,17 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export function Welcome() {
     const navigation = useNavigation();
 
-    async function handleStart(){
-        
-        // await AsyncStorage.removeItem('@plantmanager:user')
+    // async function ValidaNome(){
+    //     let UserName = await AsyncStorage.getItem('@plantmanager:user')
+    //     if(!UserName){
+    //         navigation.navigate('UserIdentification' as never);
+    //     }else{
+    //         navigation.navigate('MyPlants' as never)
+    //     }
+    // }
+    
 
+    async function handleStart(){
         console.log("await AsyncStorage.getItem('@plantmanager:user')")
         console.log(await AsyncStorage.getItem('@plantmanager:user'))
         let UserName = await AsyncStorage.getItem('@plantmanager:user')
@@ -31,8 +38,6 @@ export function Welcome() {
         }else{
             navigation.navigate('MyPlants' as never)
         }
-
-        // navigation.navigate('UserIdentification' as never);
     }
 
     const teste = AsyncStorage.getItem("@plantmanager:user");
