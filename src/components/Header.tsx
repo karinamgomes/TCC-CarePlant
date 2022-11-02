@@ -32,7 +32,7 @@ export function Header(){
                     {userName}
                 </Text>
             </View>
-            <Image source={userImg} style={styles.image}/>
+            {/* <Image source={userImg} style={styles.image}/> */}
         </View>
     )
 }

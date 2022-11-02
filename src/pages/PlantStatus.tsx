@@ -58,7 +58,7 @@ export function PlantStatus() {
                         source={PlantaFake}
                         style={styles.imagePhoto}  
                     />
-                    <Text style={styles.title}>nome da planta</Text>
+                    <Text style={styles.title}>Nome da planta</Text>
                 </View>
                 <View style={styles.waterLeve}>
                     <Image
@@ -86,11 +86,12 @@ const styles = StyleSheet.create({
     image: {
         resizeMode: "cover",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
     },
     imagePhoto: {
         width:160,
         height:160,
+        marginTop:40
     },
     button: {
         justifyContent: 'center',
@@ -121,7 +122,8 @@ const styles = StyleSheet.create({
         color: colors.heading,
         fontFamily: fonts.heading,
         lineHeight: 20,
-        marginTop: 15
+        marginTop: 15,
+        padding:20
     },
     subtitle: {
         fontFamily: fonts.text,

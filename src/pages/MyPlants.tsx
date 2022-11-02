@@ -122,7 +122,6 @@ export function MyPlants() {
                         <Text style={styles.noPlants}>
                             Não há plantas cadastradas!
                         </Text>
-
                     </View>
                     :
                     <FlatList
