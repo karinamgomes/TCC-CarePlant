@@ -31,7 +31,10 @@ const char *ntpServer = "pool.ntp.org";
 const long gmtOffset_sec = -18000; // UTC Brasileiro -5 é igual a -18000
 const int daylightOffset_sec = 0;  // No brasil não temos mais o horário de verão
 uint64_t chipIdMain = ESP.getEfuseMac();
-bool debug = true;
+
+String USUARIO = "cuca";
+String PLANTA = "kah2";
+bool debug = false;
 
 void connectToWifiFi()
 {
@@ -66,7 +69,7 @@ bool isWifiConnected()
 
 int const verificacaoSeguranca = 7;
 int const QTD_VEZES_QUE_UMA_NOVA_UMIDADE_SE_REPETIU = 4;
-int umidadeMinima = 15; // Valor no futuro deveria ser obtido atráves da API.
+int umidadeMinima = -1; // Valor no futuro deveria ser obtido atráves da API.
 
 bool isNovaUmidadeConfiavel(int confianca)
 {
@@ -75,6 +78,7 @@ bool isNovaUmidadeConfiavel(int confianca)
 
 void monitoraHumidadeNoSolo(int umidadeAtual)
 {
+    //TODO - Verificar com o fernando a questão do parâmetro *notificado*
     static int confianca = 0;
     static int umidadeAntiga = -1;
     if (umidadeAtual < (umidadeAntiga - verificacaoSeguranca) || umidadeAtual > (umidadeAntiga + verificacaoSeguranca))
@@ -88,18 +92,18 @@ void monitoraHumidadeNoSolo(int umidadeAtual)
             {
                 printOnServer("\nUmidade menor que a mínima detectada.");
                 printOnBasicConsole("Umidade menor que a mínima detectada.");
-                updateHistoricoUmidade(mac2String((byte *)&chipIdMain), umidadeAtual, 0, true);
+                updateHistoricoUmidade(mac2String((byte *)&chipIdMain), umidadeAtual, PLANTA, USUARIO, true);
             }
             else if (umidadeAtual > umidadeAntiga)
             {
-                updateHistoricoUmidade(mac2String((byte *)&chipIdMain), umidadeAtual, 0, false);
+                updateHistoricoUmidade(mac2String((byte *)&chipIdMain), umidadeAtual, PLANTA, USUARIO, true);
                 printOnServer("\nO nível de umidade aumentou.");
                 printOnBasicConsole("O nível de umidade aumentou.");
             }
             else
             {
                 // Umidade atual menor que a ultima
-                updateHistoricoUmidade(mac2String((byte *)&chipIdMain), umidadeAtual, 0, false);
+                updateHistoricoUmidade(mac2String((byte *)&chipIdMain), umidadeAtual, PLANTA, USUARIO, true);
                 printOnServer("\nO nível de umidade diminuiu.");
                 printOnBasicConsole("O nível de umidade diminuiu.");
             }
@@ -127,6 +131,8 @@ void setup()
 
 void loop()
 {
+    umidadeMinima = getMinimalHumidity(PLANTA, USUARIO);
+    printOnServer("Umidade Mínima Obtida: " + String(umidadeMinima));
     float h = dht.readHumidity();    // Read temperature as Celsius (the default)
     float t = dht.readTemperature(); // Read temperature as Fahrenheit (isFahrenheit = true)
     float f = dht.readTemperature(true);
@@ -168,7 +174,13 @@ void loop()
             printOnBasicConsole(returnHumidityString(soilSensorValue));
             printOnBasicConsole(returnHumidityPorcentageString(porcentHumidade));
         }
-        monitoraHumidadeNoSolo(porcentHumidade);
+        if (umidadeMinima == -5) 
+        {
+          printOnServer("Não foi possível obter a umidade mínima pela API");
+        }
+        else {
+          monitoraHumidadeNoSolo(porcentHumidade); 
+        }
     }
     delay(2500);
 }
