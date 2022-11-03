@@ -71,7 +71,7 @@ void updateHistoricoUmidade(String idSensor, int umidadePorcent, String nomePlan
 int getMinimalHumidity(String plantName, String username)
 {
   String almostTheUrl = API_DNS + "GravarPlantas/Nivel?rowKey=" + plantName + "&tableStorageName=Planta";
-  const char* URL = almostTheUrl.c_str();
+  const char *URL = almostTheUrl.c_str();
   RequestOptions options;
   options.method = "GET";
   options.headers["partitionKey"] = username;
@@ -92,11 +92,11 @@ int getMinimalHumidity(String plantName, String username)
     Serial.println(error.c_str());
     return -5;
   }
-  
+
   JsonObject conteudo = doc["conteudo"];
   int conteudo_nivelUmidade = conteudo["nivelUmidade"];
   const char *conteudo_nomePlanta = conteudo["nomePlanta"];
   const char *conteudo_nome = conteudo["nome"];
-  
+
   return conteudo_nivelUmidade;
 }

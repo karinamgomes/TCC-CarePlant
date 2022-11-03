@@ -32,8 +32,8 @@ const long gmtOffset_sec = -18000; // UTC Brasileiro -5 é igual a -18000
 const int daylightOffset_sec = 0;  // No brasil não temos mais o horário de verão
 uint64_t chipIdMain = ESP.getEfuseMac();
 
-String USUARIO = "cuca"; //Estático temporariamente para quesito de testes
-String PLANTA = "kah2"; //Estático temporariamente para quesito de testes
+String USUARIO = "cuca"; // Estático temporariamente para quesito de testes
+String PLANTA = "kah2";  // Estático temporariamente para quesito de testes
 bool debug = false;
 
 void connectToWifiFi()
@@ -78,7 +78,7 @@ bool isNovaUmidadeConfiavel(int confianca)
 
 void monitoraHumidadeNoSolo(int umidadeAtual)
 {
-    //TODO - Verificar com o fernando a questão do parâmetro *notificado*
+    // TODO - Verificar com o fernando a questão do parâmetro *notificado*
     static int confianca = 0;
     static int umidadeAntiga = -1;
     if (umidadeAtual < (umidadeAntiga - verificacaoSeguranca) || umidadeAtual > (umidadeAntiga + verificacaoSeguranca))
@@ -92,7 +92,7 @@ void monitoraHumidadeNoSolo(int umidadeAtual)
             {
                 printOnServer("\nUmidade menor que a mínima detectada.");
                 printOnBasicConsole("Umidade menor que a mínima detectada.");
-                updateHistoricoUmidade(mac2String((byte *)&chipIdMain), umidadeAtual, PLANTA, USUARIO, true);
+                updateHistoricoUmidade(mac2String((byte *)&chipIdMain), umidadeAtual, PLANTA, USUARIO, false);
             }
             else if (umidadeAtual > umidadeAntiga)
             {
@@ -107,6 +107,7 @@ void monitoraHumidadeNoSolo(int umidadeAtual)
                 printOnServer("\nO nível de umidade diminuiu.");
                 printOnBasicConsole("O nível de umidade diminuiu.");
             }
+            // Eu preciso melhorar essa lógica, dado que se por acaso o update falhar, não seja atualizado a umidade
             umidadeAntiga = umidadeAtual;
             confianca = 0;
         }
@@ -174,12 +175,13 @@ void loop()
             printOnBasicConsole(returnHumidityString(soilSensorValue));
             printOnBasicConsole(returnHumidityPorcentageString(porcentHumidade));
         }
-        if (umidadeMinima == -5) 
+        if (umidadeMinima == -5)
         {
-          printOnServer("Não foi possível obter a umidade mínima pela API");
+            printOnServer("Não foi possível obter a umidade mínima pela API");
         }
-        else {
-          monitoraHumidadeNoSolo(porcentHumidade); 
+        else
+        {
+            monitoraHumidadeNoSolo(porcentHumidade);
         }
     }
     delay(2500);
