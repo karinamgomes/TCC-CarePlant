@@ -25,7 +25,6 @@ interface PlantProps extends RectButtonProps {
 }
 
 export const PlantCardSecondary = ({ data, handleRemove, ...rest} : PlantProps) => {
-    console.log(data.urlFotoPlanta)
     return(
         <Swipeable
             overshootRight={false}

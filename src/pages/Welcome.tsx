@@ -21,23 +21,13 @@ export function Welcome() {
 
     async function handleStart(){
         
-        // await AsyncStorage.removeItem('@plantmanager:user')
-
-        console.log("await AsyncStorage.getItem('@plantmanager:user')")
-        console.log(await AsyncStorage.getItem('@plantmanager:user'))
         let UserName = await AsyncStorage.getItem('@plantmanager:user')
         if(!UserName){
             navigation.navigate('UserIdentification' as never);
         }else{
             navigation.navigate('MyPlants' as never)
         }
-
-        // navigation.navigate('UserIdentification' as never);
     }
-
-    const teste = AsyncStorage.getItem("@plantmanager:user");
-    console.log("JSON.stringify(teste)")
-    console.log(JSON.stringify(teste))
 
     return (
         <SafeAreaView style={styles.container}>

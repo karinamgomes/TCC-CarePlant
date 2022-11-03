@@ -16,6 +16,7 @@ export default {
   blue_light: '#EBF6FF',
 
   baseGreen: '#66C385',
+  darkGreen: '#3d754f',
 
   red: '#E83F5B',
   text:'#5C6660'

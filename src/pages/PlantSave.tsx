@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useCallback } from 'react';
 import {
     Alert,
     StyleSheet,
@@ -30,6 +30,8 @@ import teste from '../assets/plus-circle.png';
 import { Formik, useFormik, withFormik } from 'formik';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { sendNotification } from '../utils/send-notification';
+
 
 interface Params {
     plant: PlantProps
@@ -47,11 +49,6 @@ export function PlantSave() {
     function handleChangeTime(dateTime: Date) {
         if (Platform.OS === 'android') {
             setShowDatePicker(oldState => !oldState);
-        }
-
-        if (dateTime && isBefore(dateTime, new Date())) {
-            setSelectedDateTime(new Date());
-            return Alert.alert('Escolha uma hora no futuro! ⏰');
         }
 
         if (dateTime)
@@ -124,9 +121,7 @@ export function PlantSave() {
         aspect: [4, 3],
         quality: 1,
       });
-      console.log("result")
       //@ts-ignore
-      console.log(result.uri)
       let uri = ""
       if (!result.cancelled) {
         setImage(result.uri);
@@ -147,9 +142,11 @@ export function PlantSave() {
         return name
     }
 
-   return (
-    <Formik initialValues={{urlImage:'', name: '', hasHumiditySensor: false,  dateNotification: new Date(), level:"" }} 
-    onSubmit={async (values)=>{
+    
+
+    
+
+    const savePlant = useCallback(async(values:any)=>{
         try{
             //TODO: ver se vai colocar campo IDSensor
             var dataGravarPlantas = {
@@ -161,9 +158,9 @@ export function PlantSave() {
                 sensor:values.hasHumiditySensor?true:false,
                 codigoSensor: "94:B5:55:2B:67:90",
                 urlFotoPlanta: image,
+                dataAlarme: values.dateNotification,
             }
 
-            console.log("dataGravarPlantas")
             console.log(dataGravarPlantas)
 
             axios({
@@ -171,19 +168,28 @@ export function PlantSave() {
                 url: 'https://middleware-arduino.azurewebsites.net/GravarPlantas',
                 data: dataGravarPlantas
               }).then((response) => {
-                console.log(response.data);
+
+                // sendNotification()
                 navigation.navigate('Confirmation' as never, {
                     title: 'Tudo certo',
                     subtitle: `Cadastro de ${values.name} realizado com sucesso.`,
                     buttonTitle: 'Minhas plantas',
                     nextScreen: 'MyPlants',
                 } as never);
+
+
             
             });
     
               
 
         }catch(err){ alert(err)}
+    },[image])
+
+   return (
+    <Formik initialValues={{urlImage:'', name: '', hasHumiditySensor: false,  dateNotification: new Date(), level:"" }} 
+    onSubmit={async (values)=>{
+        savePlant(values)
         
 
         }}>
@@ -440,3 +446,5 @@ const styles = StyleSheet.create({
       },
     
 });
+
+

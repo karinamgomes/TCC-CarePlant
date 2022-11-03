@@ -32,8 +32,6 @@ export function MyPlants() {
     async function handleNewPlant() {
 
         navigation.navigate('PlantSave' as never);
-        console.log(myPlants)
-        console.log("passou aq")
     }
 
     const deletePlant = async (plant: string) => {
