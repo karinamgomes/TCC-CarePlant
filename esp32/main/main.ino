@@ -32,8 +32,8 @@ const long gmtOffset_sec = -18000; // UTC Brasileiro -5 é igual a -18000
 const int daylightOffset_sec = 0;  // No brasil não temos mais o horário de verão
 uint64_t chipIdMain = ESP.getEfuseMac();
 
-String USUARIO = "cuca";
-String PLANTA = "kah2";
+String USUARIO = "cuca"; //Estático temporariamente para quesito de testes
+String PLANTA = "kah2"; //Estático temporariamente para quesito de testes
 bool debug = false;
 
 void connectToWifiFi()
