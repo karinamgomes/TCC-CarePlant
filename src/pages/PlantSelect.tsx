@@ -36,18 +36,18 @@ export function PlantSelect(){
 
     const navigation = useNavigation();
 
-    function handleEnrivomentSelected(environment: string){
-        setEnviromentSelected(environment);
+    // function handleEnrivomentSelected(environment: string){
+    //     setEnviromentSelected(environment);
 
-        if(environment == 'all')
-            return setFilteredPlants(plants);
+    //     if(environment == 'all')
+    //         return setFilteredPlants(plants);
         
-        const filtered = plants.filter(plant => 
-            plant.environments.includes(environment)
-        );
+    //     const filtered = plants.filter(plant => 
+    //         plant.environments.includes(environment)
+    //     );
 
-        setFilteredPlants(filtered);
-    }
+    //     setFilteredPlants(filtered);
+    // }
 
     async function fetchPlants(){
         const { data } = await api

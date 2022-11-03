@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     image: {
         resizeMode: "cover",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
     },
     imagePhoto: {
         width: 260,

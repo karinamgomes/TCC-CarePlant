@@ -35,7 +35,7 @@ export function Confirmation(){
     } = routes.params as Params;
     
     function handleMoveOn(){
-        navigation.navigate(nextScreen as never);
+        navigation.navigate(nextScreen as never, {refresh : true} as never);
     }
 
     return (

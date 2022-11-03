@@ -8,7 +8,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
-import userImg from '../assets/rodrigo.png';
+import userImg from '../assets/user.png';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 
@@ -32,7 +32,7 @@ export function Header(){
                     {userName}
                 </Text>
             </View>
-            <Image source={userImg} style={styles.image}/>
+            {/* <Image source={userImg} style={styles.image}/> */}
         </View>
     )
 }
