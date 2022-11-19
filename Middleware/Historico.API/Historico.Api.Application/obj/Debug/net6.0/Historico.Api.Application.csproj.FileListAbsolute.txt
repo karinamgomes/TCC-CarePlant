@@ -46,3 +46,5 @@ C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.Api.Application\obj\De
 C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.Api.Application\obj\Debug\net6.0\refint\Historico.Api.Application.dll
 C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.Api.Application\obj\Debug\net6.0\Historico.Api.Application.pdb
 C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.Api.Application\obj\Debug\net6.0\ref\Historico.Api.Application.dll
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Documents\repos\TCC-CarePlant\Middleware\Historico.API\Historico.Api.Application\obj\Debug\net6.0\Historico.Api.Application.csproj.AssemblyReference.cache
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Documents\repos\TCC-CarePlant\Middleware\Historico.API\Historico.Api.Application\obj\Debug\net6.0\Historico.Api.Application.GeneratedMSBuildEditorConfig.editorconfig

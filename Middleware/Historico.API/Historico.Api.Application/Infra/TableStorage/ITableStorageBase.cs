@@ -17,5 +17,6 @@ namespace Historico.Api.Application.Infra.TableStorage
         Task<List<T>> Get<T>(string tableStorageName, string partitionKey) where T : TableStorageEntity, new();
 
         Task<List<T>> GetNotificacao<T>(string tableStorageName, string partitionKey) where T : TableStorageEntity, new();
+
     }
 }

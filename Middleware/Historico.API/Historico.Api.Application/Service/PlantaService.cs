@@ -34,6 +34,40 @@ namespace Historico.Api.Application.Service
                     return new ResponseObject() { StatusCode = StatusCodes.Status400BadRequest, Mensagem = mensage };
                 }
 
+                var plantaJaExist = await _plantaTableStorage.GetNivelUmidadeByCodigoSensor<PlantaEntity>(Planta.NomeTableStorage, Planta.CodigoSensor);
+
+                if (plantaJaExist.Count > 0)
+                {
+                    var mensage = "Código de Sensor já utilizado.";
+                    Log.Error(mensage);
+                    return new ResponseObject() { StatusCode = StatusCodes.Status400BadRequest, Mensagem = mensage };
+                }
+
+                var mapResultado = _mapper.Map<PlantaRequest, PlantaEntity>(Planta);
+
+                await _plantaTableStorage.CreateOrUpdate(mapResultado, Planta.NomeTableStorage);
+
+                return new ResponseObject() { StatusCode = StatusCodes.Status200OK, Mensagem = "Sucesso" };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseObject() { StatusCode = StatusCodes.Status400BadRequest, Mensagem = ex.Message };
+            }
+        }
+
+        public async Task<ResponseObject> AlterarPlanta(PlantaRequest Planta)
+        {
+            try
+            {
+                var tableExists = await _plantaTableStorage.GetTable(Planta.NomeTableStorage);
+
+                if (!tableExists)
+                {
+                    var mensage = "Tabela não encontrada no Storage Account";
+                    Log.Error(mensage);
+                    return new ResponseObject() { StatusCode = StatusCodes.Status400BadRequest, Mensagem = mensage };
+                }
+
                 var mapResultado = _mapper.Map<PlantaRequest, PlantaEntity>(Planta);
 
                 await _plantaTableStorage.CreateOrUpdate(mapResultado, Planta.NomeTableStorage);
@@ -94,7 +128,7 @@ namespace Historico.Api.Application.Service
             }
         }
 
-        public async Task<ResponseObject> BuscarNivel(string partitionKey, string rowKey, string tableStorageName)
+        public async Task<ResponseObject> BuscarNivel(string codigoSensor, string tableStorageName)
         {
             try
             {
@@ -107,9 +141,9 @@ namespace Historico.Api.Application.Service
                     return new ResponseObject() { StatusCode = StatusCodes.Status400BadRequest, Mensagem = mensage };
                 }
 
-                var result = _plantaTableStorage.GetNivelUmidade<PlantaEntity>(tableStorageName, partitionKey, rowKey);
+                var result = await _plantaTableStorage.GetNivelUmidadeByCodigoSensor<PlantaEntity>(tableStorageName, codigoSensor);
 
-                return new ResponseObject() { StatusCode = StatusCodes.Status200OK, Mensagem = "Sucesso", Conteudo = result };
+                return new ResponseObject() { StatusCode = StatusCodes.Status200OK, Mensagem = "Sucesso", Conteudo = new { NivelUmidade = result[0].NivelDeUmidade, NomePlanta = result[0].Nome, Nome = result[0].PartitionKey, Token = result[0].Token }};
             }
             catch (Exception ex)
             {
