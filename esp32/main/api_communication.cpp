@@ -21,18 +21,20 @@ String retornaNumeroRegistro()
   return numRegistro;
 }
 
-void checkForErrorOnSend(int httpResponseCode)
+bool checkForErrorOnSend(int httpResponseCode)
 {
   if (httpResponseCode > 0)
   {
     String response = http.getString();
     Serial.println(httpResponseCode);
     Serial.println(response);
+    return false;
   }
   else
   {
     Serial.print("Error on sending PUT: ");
     Serial.println(httpResponseCode);
+    return true;
   }
 }
 
@@ -48,7 +50,7 @@ String boolToString(bool b)
   }
 }
 
-void updateHistoricoUmidade(String idSensor, int umidadePorcent, String nomePlanta, String nome, bool notificado)
+bool updateHistoricoUmidade(String idSensor, int umidadePorcent, String nomePlanta, String nome, bool notificado)
 {
   http.begin(API_DNS + "tablestorage");
   http.addHeader("Content-Type", "application/json");
@@ -64,8 +66,9 @@ void updateHistoricoUmidade(String idSensor, int umidadePorcent, String nomePlan
   Serial.println("\nJson Enviado: ");
   Serial.println(jsonBoby);
   int httpResponseCode = http.PUT(jsonBoby);
-  checkForErrorOnSend(httpResponseCode);
+  bool isErrorOnPut = checkForErrorOnSend(httpResponseCode);
   http.end();
+  return isErrorOnPut;
 }
 
 int getMinimalHumidity(String plantName, String username)

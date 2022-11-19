@@ -78,9 +78,9 @@ bool isNovaUmidadeConfiavel(int confianca)
 
 void monitoraHumidadeNoSolo(int umidadeAtual)
 {
-    // TODO - Verificar com o fernando a questão do parâmetro *notificado*
     static int confianca = 0;
     static int umidadeAntiga = -1;
+    bool isUpdateOK = false;
     if (umidadeAtual < (umidadeAntiga - verificacaoSeguranca) || umidadeAtual > (umidadeAntiga + verificacaoSeguranca))
     {
         confianca += 1;
@@ -92,24 +92,26 @@ void monitoraHumidadeNoSolo(int umidadeAtual)
             {
                 printOnServer("\nUmidade menor que a mínima detectada.");
                 printOnBasicConsole("Umidade menor que a mínima detectada.");
-                updateHistoricoUmidade(mac2String((byte *)&chipIdMain), umidadeAtual, PLANTA, USUARIO, false);
+                isUpdateOK = updateHistoricoUmidade(mac2String((byte *)&chipIdMain), umidadeAtual, PLANTA, USUARIO, false);
             }
             else if (umidadeAtual > umidadeAntiga)
             {
-                updateHistoricoUmidade(mac2String((byte *)&chipIdMain), umidadeAtual, PLANTA, USUARIO, true);
+                isUpdateOK = updateHistoricoUmidade(mac2String((byte *)&chipIdMain), umidadeAtual, PLANTA, USUARIO, true);
                 printOnServer("\nO nível de umidade aumentou.");
                 printOnBasicConsole("O nível de umidade aumentou.");
             }
             else
             {
                 // Umidade atual menor que a ultima
-                updateHistoricoUmidade(mac2String((byte *)&chipIdMain), umidadeAtual, PLANTA, USUARIO, true);
+                isUpdateOK = updateHistoricoUmidade(mac2String((byte *)&chipIdMain), umidadeAtual, PLANTA, USUARIO, true);
                 printOnServer("\nO nível de umidade diminuiu.");
                 printOnBasicConsole("O nível de umidade diminuiu.");
             }
-            // Eu preciso melhorar essa lógica, dado que se por acaso o update falhar, não seja atualizado a umidade
-            umidadeAntiga = umidadeAtual;
-            confianca = 0;
+            if (isUpdateOK)
+            {
+                umidadeAntiga = umidadeAtual;
+                confianca = 0;
+            }
         }
     }
     else
@@ -184,5 +186,6 @@ void loop()
             monitoraHumidadeNoSolo(porcentHumidade);
         }
     }
+    //Delay de aproximadamente 2 segundos para respeitar o tempo de atualização do sensor de umidade.
     delay(2500);
 }
