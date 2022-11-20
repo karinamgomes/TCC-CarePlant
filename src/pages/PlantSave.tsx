@@ -33,6 +33,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
 import * as yup from 'yup'
 import { scheduleNotification } from '../utils/schedule/Notifications';
+import uuid from 'react-native-uuid';
 
 interface Params {
     plant: PlantProps
@@ -168,7 +169,7 @@ export function PlantSave() {
         try {
             var dataGravarPlantas = {
                 partitionKey: await getNameUser(),
-                rowKey: values.name,
+                rowKey: uuid.v4(),
                 nome: values.name,
                 nivelDeUmidade: values.hasHumiditySensor ? parseInt(values.level) : 0,
                 nomeTableStorage: "Planta",

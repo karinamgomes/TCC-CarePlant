@@ -147,7 +147,7 @@ export function PlantEdit() {
         try {
             var dataGravarPlantas = {
                 partitionKey: await getNameUser(),
-                rowKey: plant.nome,
+                rowKey: plant.rowKey,
                 nome: values.name,
                 nivelDeUmidade: values.level? parseInt(values.level) : 0,
                 nomeTableStorage: "Planta",
@@ -343,11 +343,10 @@ export function PlantEdit() {
 
 const styles = StyleSheet.create({
     titlePage:{
-        fontSize:22,
+        fontSize:23,
         color:colors.white,
         // marginBottom:30,
         fontWeight:'600',
-        backgroundColor:"#ffffff23",
         width:"100%",
         textAlign:"center",
         paddingVertical:3,
