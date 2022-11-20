@@ -12,6 +12,7 @@ export interface PlantProps {
     dataAlarme?: string,
     sensor: boolean,
     urlFotoPlanta?: string,
+    token:string,
 }
 
 export interface StoragePlantProps {

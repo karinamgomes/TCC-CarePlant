@@ -5,20 +5,15 @@ import {
     View,
     Text,
     StyleSheet,
-    FlatList,
     Image,
-    ActivityIndicator,
-    Animated,
     ImageBackground
 } from 'react-native';
 import { PlantProps } from "../libs/storage";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Button } from '../components/Button';
 import waterdrop from '../assets/waterdrop.png';
-import PlantaFake from '../assets/PlantaFake.png';
 import water from '../assets/water.png';
 import axios from 'axios';
-import { BackgroundImage } from 'react-native-elements/dist/config';
 import { format } from 'date-fns';
 
 interface Response {
@@ -30,14 +25,9 @@ interface Response {
 export function PlantStatus() {
     const [umidade, setUmidade] = useState<number>(0);
     const routes = useRoute();
-    const [plant, setPlant] = useState<PlantProps>();
+    //@ts-ignore
+    const [plant, setPlant] = useState<PlantProps>(routes.params.plant as PlantProps);
     const navigation = useNavigation();
-    useEffect(() => {
-        if (routes.params) {
-            //@ts-ignore
-            setPlant(routes.params.plant as PlantProps)
-        }
-    }, [routes.params])
 
     const getStatusPlant = async () => {
         try {
@@ -46,7 +36,7 @@ export function PlantStatus() {
                 url: 'https://middleware-arduino.azurewebsites.net/TableStorage/NivelUmidade?tableStorageName=historicoumidade',
                 headers: {
                     accept: '/',
-                    partitionKey: "94:B5:55:2B:67:90"
+                    partitionKey: plant?.partitionKey
                 }
             }).then((response) => {
                 const result: Response = response.data
@@ -60,15 +50,22 @@ export function PlantStatus() {
     }
 
     useEffect(() => {
-        getStatusPlant()
-    }, [])
+
+        if(plant?.sensor === true){
+            getStatusPlant()
+        }
+    }, [plant])
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            getStatusPlant()
-        }, 4000);
-        return () => clearInterval(interval);
-    }, []);
+    
+        if(plant?.sensor === true){
+            const interval = setInterval(() => {
+                getStatusPlant()
+            }, 5000);
+            return () => clearInterval(interval);
+        }
+        
+    }, [plant]);
 
     return (
         // <Animated.View style={styles.container}>
@@ -99,7 +96,7 @@ export function PlantStatus() {
             
             
 
-            <Button style={styles.button} onPress={() => navigation.goBack()} title='Voltar' />
+            <Button style={styles.button} onPress={() => navigation.navigate('PlantEdit' as never, { plant } as never)} title='Alterar planta' />
         </ImageBackground>
         // </Animated.View>
     )

@@ -115,10 +115,10 @@ export function PlantSelect(){
            <View style={styles.plants}>
                <FlatList 
                 data={filteredPlants}
-                keyExtractor={(item) => String(item.id)}
+                keyExtractor={(item) => String(item.nome)}
                 renderItem={({ item }) => (
                     <PlantCardPrimary 
-                        data={item} 
+                        data={{name:item.nome, photo:item.urlFotoPlanta ?? ''}} 
                         onPress={() => handlePlantSelect(item)}
                     />
                 )}

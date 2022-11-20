@@ -20,6 +20,8 @@ import { Button } from '../components/Button';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import { sendPushNotification } from '../utils/send-notification';
+import { cancelScheduledNotification } from '../utils/schedule/Notifications';
 
 export function MyPlants() {
     const [myPlants, setMyPlants] = useState<PlantProps[]>([]);
@@ -52,6 +54,7 @@ export function MyPlants() {
             }).then(() => {
                 getPlants()
             });
+            cancelScheduledNotification(plant)
             
         } catch (err) { alert("Ocorreu um erro ao deletar planta!") }
     }
@@ -141,6 +144,8 @@ export function MyPlants() {
                     title="Nova Planta"
                     onPress={handleNewPlant}
                 />
+                
+
             </View>
         </View>
     )
