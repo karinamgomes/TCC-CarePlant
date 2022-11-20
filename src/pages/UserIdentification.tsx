@@ -50,7 +50,7 @@ export function UserIdentification() {
             navigation.navigate('Confirmation'as never, {
                 title: 'Pronto!',
                 subtitle:'Que tal começar a cadastrar suas plantas?',
-                buttonTitle: 'Cadastrar',
+                buttonTitle: 'Vamos lá!',
                 nextScreen: 'MyPlants',
             }as never);        
         }catch{

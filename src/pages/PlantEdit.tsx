@@ -152,12 +152,12 @@ export function PlantEdit() {
                 nivelDeUmidade: values.level? parseInt(values.level) : 0,
                 nomeTableStorage: "Planta",
                 sensor: plant.sensor,
-                codigoSensor: plant.codigoSensor?plant.codigoSensor:null,
+                codigoSensor: plant.codigoSensor,
                 urlFotoPlanta: plant.urlFotoPlanta,
                 token: plant.token,
                 dataAlarme: values.dateNotification,
             }
-            console.log(dataGravarPlantas)
+
             axios({
                 method: 'put',
                 url: 'https://middleware-arduino.azurewebsites.net/GravarPlantas/Alterar',

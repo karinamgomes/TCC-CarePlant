@@ -36,7 +36,7 @@ export function PlantStatus() {
                 url: 'https://middleware-arduino.azurewebsites.net/TableStorage/NivelUmidade?tableStorageName=historicoumidade',
                 headers: {
                     accept: '/',
-                    partitionKey: plant?.partitionKey
+                    partitionKey: plant?.codigoSensor
                 }
             }).then((response) => {
                 const result: Response = response.data
@@ -80,13 +80,18 @@ export function PlantStatus() {
                 <Text style={styles.title}>{plant? plant.nome:''}</Text>
             </View>
             {plant?.sensor ===true ?
+            <View>
+            <Text style={styles.levelText} > Nível atual de umidade:</Text>
             <View style={styles.waterLeve}>
                 <Image
                     source={waterdrop}
                     style={styles.spotlightImage}
                 />
+                
                 <Text style={styles.waterLeveText} >  {umidade} %</Text>
             </View>
+            </View>
+            
             :
             <View>
                 <Text style={styles.horario}>Horário de regagem</Text>
@@ -198,5 +203,10 @@ const styles = StyleSheet.create({
     waterLeveText: {
         fontSize: 24,
         color: colors.text
+    },
+    levelText:{
+        paddingBottom:15,
+        fontSize:16,
+        color:colors.blue,
     }
 });

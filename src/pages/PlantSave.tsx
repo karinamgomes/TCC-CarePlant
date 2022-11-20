@@ -174,16 +174,20 @@ export function PlantSave() {
                 nivelDeUmidade: values.hasHumiditySensor ? parseInt(values.level) : 0,
                 nomeTableStorage: "Planta",
                 sensor: values.hasHumiditySensor ? true : false,
-                codigoSensor: values.codeSensor,
+                codigoSensor: values.hasHumiditySensor ? values.codeSensor : "SemCodigo",
                 urlFotoPlanta: image,
                 token: await getExpoToken(),
                 dataAlarme: values.dateNotification,
             }
+
             axios({
                 method: 'put',
                 url: 'https://middleware-arduino.azurewebsites.net/GravarPlantas',
                 data: dataGravarPlantas
             }).then((response) => {
+                if(!dataGravarPlantas.sensor){
+                    scheduleNotification(dataGravarPlantas.nome,`${dataGravarPlantas.nome} precisa de cuidados, não esqueça de regá-la! 🌱`,dataGravarPlantas.dataAlarme)
+                }
                 navigation.navigate('Confirmation' as never, {
                     title: 'Tudo certo',
                     subtitle: `Cadastro de ${values.name} realizado com sucesso.`,
@@ -191,12 +195,11 @@ export function PlantSave() {
                     nextScreen: 'MyPlants',
                 } as never);
             }).catch(function (err) {
-                Alert.alert('Erro', `Ocorreu um erro ao editar planta, por favor, tente novamente mais tarde!`)
+
+                Alert.alert('Erro', `Ocorreu um erro ao adicionar planta, por favor, tente novamente mais tarde!`)
                    
                 });
-            if(!dataGravarPlantas.sensor){
-                scheduleNotification(dataGravarPlantas.nome,`${dataGravarPlantas.nome} precisa de cuidados, não esqueça de regá-la! 🌱`,dataGravarPlantas.dataAlarme)
-            }
+            
         } catch (err) {
             Alert.alert('Erro', `Ocorreu um erro ao adicionar planta, por favor, tente novamente mais tarde!`)
         }

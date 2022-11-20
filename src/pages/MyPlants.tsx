@@ -69,7 +69,7 @@ export function MyPlants() {
                 text: 'Sim, remover',
                 onPress: async () => {
                     try {
-                        await deletePlant(plant.nome);
+                        await deletePlant(plant.rowKey);
 
                     } catch (error) {
                         Alert.alert('Não foi possível remover! ');
@@ -127,7 +127,7 @@ export function MyPlants() {
                     :
                     <FlatList
                         data={myPlants}
-                        keyExtractor={(item) => String(item.nome)}
+                        keyExtractor={(item) => String(item.rowKey)}
                         renderItem={({ item }) => (
                             <PlantCardSecondary
                                 data={item}
