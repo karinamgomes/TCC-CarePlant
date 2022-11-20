@@ -73,13 +73,15 @@ namespace Historico.Api.Application.Infra.TableStorage
             await cloudTable.ExecuteAsync(operation);
         }
 
-        public async Task<List<T>> GetNivelUmidade<T>(string tableStorageName, string partitionKey, string rowKey) where T : PlantaEntity, new()
+        public async Task<List<T>> GetNivelUmidadeByCodigoSensor<T>(string tableStorageName, string codigoSensor) where T : PlantaEntity, new()
         {
             TableQuery<T> tableQuery = new TableQuery<T>().Where(
-            TableQuery.CombineFilters(
-                TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, partitionKey),
-                TableOperators.And,
-                TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, rowKey)));
+                TableQuery.GenerateFilterCondition("CodigoSensor", QueryComparisons.Equal, codigoSensor));
+                
+            //TableQuery.CombineFilters(
+            //    TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, partitionKey),
+            //    TableOperators.And,
+            //    TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, rowKey)));
 
             TableContinuationToken continuationToken = null;
 

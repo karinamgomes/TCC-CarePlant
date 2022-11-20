@@ -135,4 +135,19 @@ C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\obj\Debug\net6.0\r
 C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\obj\Debug\net6.0\Historico.API.pdb
 C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\obj\Debug\net6.0\Historico.API.genruntimeconfig.cache
 C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\obj\Debug\net6.0\ref\Historico.API.dll
-C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\bin\Debug\net6.0\System.Net.WebSockets.WebSocketProtocol.dll
+C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\bin\Debug\net6.0\Microsoft.OpenApi.dll
+C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\obj\Debug\net6.0\Historico.API.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Documents\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\obj\Debug\net6.0\Historico.API.csproj.AssemblyReference.cache
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Documents\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\obj\Debug\net6.0\Historico.API.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Documents\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\obj\Debug\net6.0\Historico.API.AssemblyInfoInputs.cache
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Documents\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\obj\Debug\net6.0\Historico.API.AssemblyInfo.cs
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Documents\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\obj\Debug\net6.0\Historico.API.csproj.CoreCompileInputs.cache
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Documents\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\obj\Debug\net6.0\Historico.API.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Documents\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\obj\Debug\net6.0\Historico.API.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Documents\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\obj\Debug\net6.0\Historico.API.dll
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Documents\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\obj\Debug\net6.0\refint\Historico.API.dll
+C:\Users\fernando.garcia\OneDrive - ConectCar Soluções em Mobilidade Eletrônica S A\fernando.garcia\Documents\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\obj\Debug\net6.0\Historico.API.pdb
+C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\bin\Debug\net6.0\Polly.dll

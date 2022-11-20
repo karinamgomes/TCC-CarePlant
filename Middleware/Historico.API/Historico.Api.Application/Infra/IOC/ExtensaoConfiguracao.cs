@@ -1,5 +1,6 @@
 ﻿using Historico.Api.Application.Domain.Contracts;
 using Historico.Api.Application.Domain.Contracts.Service;
+using Historico.Api.Application.Infra.Repository;
 using Historico.Api.Application.Infra.TableStorage;
 using Historico.Api.Application.Service;
 using Microsoft.Extensions.Configuration;
@@ -29,6 +30,7 @@ namespace Historico.Api.Application.Infra.IOC
             //Repository
             services.AddTransient<ITableStorageBase, TableStorageBase>();
             services.AddTransient<IPlantaTableStorage, PlantaTableStorage>();
+            services.AddTransient<INotificacaoRepository, NotificacaoRepository>();
 
             //Services
             services.AddTransient<IHistoricoService, HistoricoService>();

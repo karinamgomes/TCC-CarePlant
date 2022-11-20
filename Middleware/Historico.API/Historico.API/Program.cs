@@ -47,11 +47,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapRazorPages();
-    endpoints.MapHub<ChatHub>("/chatHub");
-});
+app.MapHub<MyHubConfiguration>("/notificacoes");
 
 app.UseStaticFiles();
 
@@ -59,5 +55,6 @@ app.UseRouting();
 
 app.UseAuthorization();
 app.MapControllers();
+app.MapRazorPages();
 
 app.Run();

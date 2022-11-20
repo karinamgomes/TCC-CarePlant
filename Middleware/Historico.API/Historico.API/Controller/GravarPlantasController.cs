@@ -34,6 +34,15 @@ namespace Historico.API.Controller
             return new ObjectResult(resultado) { StatusCode = resultado.StatusCode, Value = resultado };
         }
 
+        [HttpPut]
+        [Route("Alterar")]
+        public async Task<IActionResult> AlterarPlanta([FromBody] PlantaRequest query)
+        {
+            var resultado = await _plantaService.AlterarPlanta(query);
+
+            return new ObjectResult(resultado) { StatusCode = resultado.StatusCode, Value = resultado };
+        }
+
         /// <summary>
         /// Busca as plantas.
         /// </summary>
@@ -86,9 +95,9 @@ namespace Historico.API.Controller
 
         [HttpGet]
         [Route("Nivel")]
-        public async Task<IActionResult> BuscarNivelUmidade([FromHeader] string partitionKey, string rowKey, string tableStorageName)
+        public async Task<IActionResult> BuscarNivelUmidade([FromHeader] string codigoSensor, string tableStorageName)
         {
-            var resultado = await _plantaService.BuscarNivel(partitionKey, rowKey, tableStorageName);
+            var resultado = await _plantaService.BuscarNivel(codigoSensor, tableStorageName);
 
             return new ObjectResult(resultado) { StatusCode = resultado.StatusCode, Value = resultado };
         }
