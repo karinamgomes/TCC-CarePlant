@@ -204,7 +204,7 @@ export function PlantEdit() {
                         
                         <View style={styles.plantInfo}>
                         <Text style={styles.titlePage}>Editar</Text>
-                            {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+                            {image && <Image source={{ uri: image }} style={{ width: 150, height: 150 }} />}
 
                             {!image && <TouchableOpacity
                                 style={styles.buttonStyle}
@@ -350,7 +350,7 @@ const styles = StyleSheet.create({
         width:"100%",
         textAlign:"center",
         paddingVertical:3,
-        borderRadius:5,
+        borderRadius:2,
         marginBottom:"12%"
         },
     container: {
@@ -365,8 +365,9 @@ const styles = StyleSheet.create({
     },
     plantInfo: {
         flex: 1,
-        paddingHorizontal: 30,
-        paddingVertical: 50,
+        paddingHorizontal: 5,
+        paddingVertical: 5,
+        paddingBottom: 100,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: colors.baseGreen,
@@ -375,7 +376,8 @@ const styles = StyleSheet.create({
     controller: {
         backgroundColor: colors.white,
         paddingHorizontal: 20,
-        paddingTop: '20%',
+        alignContent: 'center',
+        paddingTop: '25%',
         paddingBottom: getBottomSpace() || 20
     },
     plantName: {
