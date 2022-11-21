@@ -379,8 +379,9 @@ const styles = StyleSheet.create({
     },
     plantInfo: {
         flex: 1,
-        paddingHorizontal: 30,
+        paddingHorizontal: 80,
         paddingVertical: 50,
+        paddingTop:1,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: colors.baseGreen,
