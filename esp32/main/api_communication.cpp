@@ -28,13 +28,13 @@ bool checkForErrorOnSend(int httpResponseCode)
     String response = http.getString();
     Serial.println(httpResponseCode);
     Serial.println(response);
-    return false;
+    return true;
   }
   else
   {
     Serial.print("Error on sending PUT: ");
     Serial.println(httpResponseCode);
-    return true;
+    return false;
   }
 }
 
@@ -50,12 +50,12 @@ String boolToString(bool b)
   }
 }
 
-bool updateHistoricoUmidade(String idSensor, int umidadePorcent, String nomePlanta, String nome, bool notificado)
+bool updateHistoricoUmidade(String idSensor, int umidadePorcent, String nomePlanta, String nome, bool notificado, String token)
 {
   http.begin(API_DNS + "tablestorage");
   http.addHeader("Content-Type", "application/json");
   http.addHeader(AUTH_HEADER[0], AUTH_HEADER[1]);
-  String jsonBoby = "{   \"partitionKey\": \"@idSensor\",   \"rowKey\": \"@stringNumRegistro\",   \"eTag\": \"string\",   \"data\": \"@date\",   \"umidade\": @umidadePorcent,   \"notificado\": @notificado,   \"nomePlanta\": \"@nomePlanta\",   \"nome\": \"@nome\",   \"tableStorageName\": \"HistoricoUmidade\" }";
+  String jsonBoby = "{   \"partitionKey\": \"@idSensor\",   \"rowKey\": \"@stringNumRegistro\",   \"eTag\": \"string\",   \"data\": \"@date\",   \"umidade\": @umidadePorcent,   \"notificado\": @notificado,   \"nomePlanta\": \"@nomePlanta\",   \"nome\": \"@nome\",   \"tableStorageName\": \"HistoricoUmidade\",   \"token\": \"@token\" }";
   jsonBoby.replace("@idSensor", idSensor);
   jsonBoby.replace("@stringNumRegistro", retornaNumeroRegistro());
   jsonBoby.replace("@umidadePorcent", String(umidadePorcent));
@@ -63,6 +63,7 @@ bool updateHistoricoUmidade(String idSensor, int umidadePorcent, String nomePlan
   jsonBoby.replace("@nome", nome);
   jsonBoby.replace("@date", retornaTempoISO8601());
   jsonBoby.replace("@notificado", boolToString(notificado));
+  jsonBoby.replace("@token", token);
   Serial.println("\nJson Enviado: ");
   Serial.println(jsonBoby);
   int httpResponseCode = http.PUT(jsonBoby);
@@ -71,35 +72,34 @@ bool updateHistoricoUmidade(String idSensor, int umidadePorcent, String nomePlan
   return isErrorOnPut;
 }
 
-int getMinimalHumidity(String plantName, String username)
+JsonObject getClientInfo(String idSensor)
 {
-  String almostTheUrl = API_DNS + "GravarPlantas/Nivel?rowKey=" + plantName + "&tableStorageName=Planta";
+  String almostTheUrl = API_DNS + "GravarPlantas/Nivel?tableStorageName=Planta";
   const char *URL = almostTheUrl.c_str();
   RequestOptions options;
   options.method = "GET";
-  options.headers["partitionKey"] = username;
+  options.headers["codigoSensor"] = idSensor;
   options.headers["Accept"] = "* /*";
 
   Response response = fetch(URL, options);
   String data = response.text();
   String formatedData = data.substring(2);
   int lastIndex = formatedData.length() - 1;
-  String test = formatedData.substring(0, lastIndex);
+  String requestFormatada = formatedData.substring(0, lastIndex);
+  
+  Serial.print(requestFormatada);
 
-  StaticJsonDocument<192> doc;
-  DeserializationError error = deserializeJson(doc, test);
+  DynamicJsonDocument doc(2048);
+  DeserializationError error = deserializeJson(doc, requestFormatada);
 
   if (error)
   {
-    Serial.print("deserializeJson() failed: ");
+    Serial.print("\ndeserializeJson() failed: ");
     Serial.println(error.c_str());
-    return -5;
+    return doc["error"] = error.c_str();
   }
-
+  
   JsonObject conteudo = doc["conteudo"];
-  int conteudo_nivelUmidade = conteudo["nivelUmidade"];
-  const char *conteudo_nomePlanta = conteudo["nomePlanta"];
-  const char *conteudo_nome = conteudo["nome"];
 
-  return conteudo_nivelUmidade;
+  return conteudo;
 }
