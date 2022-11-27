@@ -203,7 +203,7 @@ export function PlantEdit() {
                     <View style={styles.container}>
                         
                         <View style={styles.plantInfo}>
-                        <Text style={styles.titlePage}>Editar</Text>
+                        <Text style={styles.titlePage}>Edição de planta</Text>
                             {image && <Image source={{ uri: image }} style={{ width: 150, height: 150 }} />}
 
                             {!image && <TouchableOpacity

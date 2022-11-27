@@ -101,7 +101,7 @@ export function PlantStatus() {
             
             
 
-            <Button style={styles.button} onPress={() => navigation.navigate('PlantEdit' as never, { plant } as never)} title='Alterar planta' />
+            <Button style={styles.button} onPress={() => navigation.navigate('PlantEdit' as never, { plant } as never)} title='Editar planta' />
         </ImageBackground>
         // </Animated.View>
     )
