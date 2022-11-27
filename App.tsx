@@ -4,7 +4,7 @@ import * as Notifications from 'expo-notifications';
 import Routes from './src/routes';
 import * as Device from 'expo-device';
 import React, { useState, useEffect, useRef } from 'react';
-import { Text, View, Button, Platform } from 'react-native';
+import { Text, View, Button, Platform, Alert } from 'react-native';
 import {
   useFonts,
   Jost_400Regular,
@@ -51,8 +51,7 @@ export default function App() {
   }, []);
 
 useEffect(()=>{
-  console.log("expoPushToken")
-  console.log(expoPushToken)
+  Alert.alert("expoPushToken: "+expoPushToken)
    AsyncStorage.setItem('@plantmanager:expoPushToken',expoPushToken ? expoPushToken : "null");
 },[expoPushToken])
   // const getHasNotification = async () => {

@@ -93,10 +93,11 @@ export function MyPlants() {
                 setLoading(false)
                 const plantsStoraged = response.data.conteudo.result
                 setMyPlants(plantsStoraged)
+                
                 return response.data.result
-            });
-        } catch (err) {
-            alert("erro ao carregas plantas cadastradas")
+            }).catch((err)=>{console.log(err) ; Alert.alert("Ocorreu um erro ao carregar as pantas: " + err.message)});
+        } catch (err:any) {
+            Alert.alert("Erro ao carregar plantas cadastradas")
             return err
         }
     }

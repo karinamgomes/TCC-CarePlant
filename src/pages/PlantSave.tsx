@@ -117,6 +117,7 @@ export function PlantSave() {
     };
 
     const validationOnlyDigits = (value: any) => {
+
         if (value === undefined) return false
         const uri = value['_3']
         if (!uri) return false
@@ -134,6 +135,8 @@ export function PlantSave() {
         if (!result.cancelled) {
             setImage(result.uri);
             uri = result.uri
+        }else {
+            setImage(undefined)  
         }
         return uri
     };
@@ -150,16 +153,18 @@ export function PlantSave() {
     const platHashasHumiditySensorValidationSchema = yup.object().shape({
         name: yup.string().min(4, ({ min }) => `Minimo de ${min} letras`).required("Campo obrigatório"),
         codeSensor: yup.string().required("Campo obrigatório"),
-        urlImage: yup.object().test('', 'Campo obrigatório', (value) => {
-            return validationOnlyDigits(value)
+        urlImage: yup.object().test('uri', 'Imagem obrigatória', (value) => {
+            if(image && image !== '') return true
+            return false
         }),
         level: yup.number().required("Campo obrigatório").min(0, ({ min }) => `O valor deve ser entre ${min} e 100`).max(100, ({ max }) => `O valor deve ser entre 0 e ${max}`)
     })
 
     const platNoHashasHumiditySensorValidationSchema = yup.object().shape({
         name: yup.string().min(4, ({ min }) => `Minimo de ${min} letras`).required("Campo obrigatório"),
-        urlImage: yup.object().test('uri', 'Campo obrigatório', (value) => {
-            return validationOnlyDigits(value)
+        urlImage: yup.object().test('uri', 'Imagem obrigatória', (value) => {
+            if(image && image !== '') return true
+            return false
         }),
         dateNotification: yup.date().required("Campo obrigatório"),
         level: yup.number().min(0, ({ min }) => `O valor deve ser entre ${min} e 100`).max(100, ({ max }) => `O valor deve ser entre 0 e ${max}`)
@@ -208,12 +213,12 @@ export function PlantSave() {
     return (
         <Formik initialValues={{ urlImage: '', name: '', hasHumiditySensor: false, dateNotification: new Date(), level: "", codeSensor: "" }}
             onSubmit={ (values) => {
-                 savePlant(values)
+                savePlant(values)
             }
             }
             validationSchema={hasHumiditySensor ? platHashasHumiditySensorValidationSchema : platNoHashasHumiditySensorValidationSchema}
         >
-            {({ handleChange, handleBlur, handleSubmit, setFieldValue, values, touched, errors }) => (
+            {({ handleChange, handleBlur, handleSubmit, setFieldValue, values, touched, errors ,validateForm}) => (
                 <ScrollView
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={styles.scrollListContainer}
@@ -235,9 +240,9 @@ export function PlantSave() {
                                 />
                                 <Text style={styles.buttonTextStyle}>Adicione uma imagem </Text>
                                 
-                                     <Text style={{ fontSize: 13, color: '#d11507' , paddingTop:8}}>{touched.urlImage && errors.urlImage ? errors.urlImage : ''}</Text>
                                 
                             </TouchableOpacity>}
+                            <Text style={{ fontSize: 13, color: '#d11507' , paddingTop:8}}>{touched.urlImage && errors.urlImage && !image ? errors.urlImage : ''}</Text>
 
                             <TextInput
                                 style={styles.inputPlantName}
@@ -347,13 +352,13 @@ export function PlantSave() {
                                     </View>
                                     
                                     <Text style={{ fontSize: 13, color: '#d11507', textAlign: 'center' }}>{touched.level && errors.level ? errors.level : ''}</Text>
-
+                                    
                                 </View>
                             }
 
                             <Button
                                 title="Cadastrar nova planta"
-                                onPress={() => handleSubmit()}
+                                onPress={() => {validateForm(),handleSubmit()}}
                             />
                         </View>
                     </View>
@@ -513,6 +518,7 @@ const styles = StyleSheet.create({
     buttonTextStyle: {
         color: '#FFFFFF',
         fontSize: 20,
+        width:"100%"
     },
     plusCicle: {
         height: 50,
