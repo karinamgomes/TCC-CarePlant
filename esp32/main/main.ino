@@ -67,7 +67,7 @@ bool isWifiConnected()
     return WiFi.status() == WL_CONNECTED;
 }
 
-int const verificacaoSeguranca = 7;
+int const verificacaoSeguranca = 4;
 int const QTD_VEZES_QUE_UMA_NOVA_UMIDADE_SE_REPETIU = 4;
 int umidadeMinima = -1; // Valor no futuro deveria ser obtido atráves da API.
 
