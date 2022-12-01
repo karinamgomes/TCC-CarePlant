@@ -67,8 +67,8 @@ bool isWifiConnected()
     return WiFi.status() == WL_CONNECTED;
 }
 
-int const verificacaoSeguranca = 7;
-int const QTD_VEZES_QUE_UMA_NOVA_UMIDADE_SE_REPETIU = 4;
+int const verificacaoSeguranca = 4;
+int const QTD_VEZES_QUE_UMA_NOVA_UMIDADE_SE_REPETIU = 3;
 int umidadeMinima = NENHUMA_UMIDADE_OBTIDA;
 
 bool isNovaUmidadeConfiavel(int confianca)
