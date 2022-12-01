@@ -21,7 +21,6 @@ export function Welcome() {
     useEffect(() => {
         ValidaNome()
     });
-    return;
 
     async function ValidaNome(){
         let UserName = await AsyncStorage.getItem('@plantmanager:user')
@@ -34,8 +33,7 @@ export function Welcome() {
     
 
     async function handleStart(){
-        console.log("await AsyncStorage.getItem('@plantmanager:user')")
-        console.log(await AsyncStorage.getItem('@plantmanager:user'))
+       
         let UserName = await AsyncStorage.getItem('@plantmanager:user')
         navigation.navigate('UserIdentification' as never);
     }

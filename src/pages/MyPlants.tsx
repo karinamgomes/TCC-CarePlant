@@ -20,6 +20,8 @@ import { Button } from '../components/Button';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import { sendPushNotification } from '../utils/send-notification';
+import { cancelScheduledNotification } from '../utils/schedule/Notifications';
 
 export function MyPlants() {
     const [myPlants, setMyPlants] = useState<PlantProps[]>([]);
@@ -52,6 +54,7 @@ export function MyPlants() {
             }).then(() => {
                 getPlants()
             });
+            cancelScheduledNotification(plant)
             
         } catch (err) { alert("Ocorreu um erro ao deletar planta!") }
     }
@@ -66,7 +69,7 @@ export function MyPlants() {
                 text: 'Sim, remover',
                 onPress: async () => {
                     try {
-                        await deletePlant(plant.nome);
+                        await deletePlant(plant.rowKey);
 
                     } catch (error) {
                         Alert.alert('Não foi possível remover! ');
@@ -90,10 +93,11 @@ export function MyPlants() {
                 setLoading(false)
                 const plantsStoraged = response.data.conteudo.result
                 setMyPlants(plantsStoraged)
+                
                 return response.data.result
-            });
-        } catch (err) {
-            alert("erro ao carregas plantas cadastradas")
+            }).catch((err)=>{console.log(err) ; Alert.alert("Ocorreu um erro ao carregar as pantas: " + err.message)});
+        } catch (err:any) {
+            Alert.alert("Erro ao carregar plantas cadastradas")
             return err
         }
     }
@@ -124,7 +128,7 @@ export function MyPlants() {
                     :
                     <FlatList
                         data={myPlants}
-                        keyExtractor={(item) => String(item.nome)}
+                        keyExtractor={(item) => String(item.rowKey)}
                         renderItem={({ item }) => (
                             <PlantCardSecondary
                                 data={item}
@@ -141,6 +145,8 @@ export function MyPlants() {
                     title="Nova Planta"
                     onPress={handleNewPlant}
                 />
+                
+
             </View>
         </View>
     )

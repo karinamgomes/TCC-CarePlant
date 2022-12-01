@@ -16,5 +16,6 @@ namespace Historico.Api.Application.DataTransferObjects.Request
         public DateTime? DataAlarme { get; set; }
         public bool Sensor { get; set; }
         public string UrlFotoPlanta { get; set; }
+        public string Token { get; set; }
     }
 }

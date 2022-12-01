@@ -11,6 +11,7 @@ import colors from '../styles/colors';
 import AuthRoutes from './tab.routes';
 import { PlantSelect } from '../pages/PlantSelect';
 import { PlantStatus } from '../pages/PlantStatus';
+import { PlantEdit } from '../pages/PlantEdit';
 
 const stackRoutes = createStackNavigator();
 
@@ -69,6 +70,11 @@ const AppRoutes: React.FC = () => (
         <stackRoutes.Screen 
             name="PlantSave"
             component={PlantSave}
+        />
+
+        <stackRoutes.Screen 
+            name="PlantEdit"
+            component={PlantEdit}
         />
 
         {/* <stackRoutes.Screen 

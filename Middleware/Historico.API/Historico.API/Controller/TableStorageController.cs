@@ -74,5 +74,13 @@ namespace Historico.API.Controller
             return new ObjectResult(resultado) { StatusCode = resultado.StatusCode, Value = resultado };
         }
 
+        [HttpGet]
+        [Route("NivelUmidade")]
+        public async Task<IActionResult> BuscarNivelUmidade([FromHeader] string partitionKey, string tableStorageName)
+        {
+            var resultado = await _historicoService.BuscarNivelUmidade(partitionKey, tableStorageName);
+
+            return new ObjectResult(resultado) { StatusCode = resultado.StatusCode, Value = resultado };
+        }
     }
 }

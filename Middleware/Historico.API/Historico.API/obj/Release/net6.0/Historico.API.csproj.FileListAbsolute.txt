@@ -135,3 +135,9 @@ C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\obj\Release\net6.0
 C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.pdb
 C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.genruntimeconfig.cache
 C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\obj\Release\net6.0\ref\Historico.API.dll
+C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\bin\Release\net6.0\Microsoft.OpenApi.dll
+C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\bin\Release\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\bin\Release\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\bin\Release\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\obj\Release\net6.0\Historico.API.MvcApplicationPartsAssemblyInfo.cs
+C:\repos\TCC-CarePlant\Middleware\Historico.API\Historico.API\bin\Release\net6.0\Polly.dll

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "197625693511",
+    "project_id": "careplantexpo",
+    "storage_bucket": "careplantexpo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:197625693511:android:4b9297ae92995a87e57862",
+        "android_client_info": {
+          "package_name": "com.unip.careplant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "197625693511-d65beb4chgeplv24h7ekartqs5j68ffc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYJ6ooXRD2bENUmHzrsYyyFqYC4w0ZMZs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "197625693511-d65beb4chgeplv24h7ekartqs5j68ffc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
