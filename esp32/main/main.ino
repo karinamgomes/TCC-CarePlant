@@ -8,6 +8,7 @@
 
 #include <WiFi.h>
 #include <WiFiManager.h>
+#include <ArduinoJson.h>
 #include "DHT.h"
 #include "api_communication.h"
 #include "util.h"
@@ -30,10 +31,12 @@ static char humidityTemp[7];
 const char *ntpServer = "pool.ntp.org";
 const long gmtOffset_sec = -18000; // UTC Brasileiro -5 é igual a -18000
 const int daylightOffset_sec = 0;  // No brasil não temos mais o horário de verão
+const int NENHUMA_UMIDADE_OBTIDA = -5;
 uint64_t chipIdMain = ESP.getEfuseMac();
 
-String USUARIO = "cuca"; // Estático temporariamente para quesito de testes
-String PLANTA = "kah2";  // Estático temporariamente para quesito de testes
+String usuario = "";
+String planta = "";
+String token = "";
 bool debug = false;
 
 void connectToWifiFi()
@@ -45,18 +48,15 @@ void connectToWifiFi()
     // wm.autoConnect automatically connect using saved credentials,
     // if connection fails, it starts an access point with the specified name
     // then goes into a blocking loop awaiting configuration and will return success result
-    Serial.print("\nConnecting to internet.");
     res = wm.autoConnect("AutoConnectAP", "password123"); // password protected ap
     if (!res)
     {
-        Serial.println("Failed to connect - Restarting ESP");
         wm.resetSettings();
         ESP.restart();
         delay(5000);
     }
     else
     {
-        Serial.println("\nWiFi connected - Server at IP address: ");
         Serial.println(WiFi.localIP());
         initServer();
     }
@@ -68,8 +68,8 @@ bool isWifiConnected()
 }
 
 int const verificacaoSeguranca = 4;
-int const QTD_VEZES_QUE_UMA_NOVA_UMIDADE_SE_REPETIU = 4;
-int umidadeMinima = -1; // Valor no futuro deveria ser obtido atráves da API.
+int const QTD_VEZES_QUE_UMA_NOVA_UMIDADE_SE_REPETIU = 3;
+int umidadeMinima = NENHUMA_UMIDADE_OBTIDA;
 
 bool isNovaUmidadeConfiavel(int confianca)
 {
@@ -90,20 +90,20 @@ void monitoraHumidadeNoSolo(int umidadeAtual)
             printOnBasicConsole("Nova umidade detectada.");
             if (umidadeAtual < umidadeMinima)
             {
+                isUpdateOK = updateHistoricoUmidade(mac2String((byte *)&chipIdMain), umidadeAtual, planta, usuario, false, token);
                 printOnServer("\nUmidade menor que a mínima detectada.");
                 printOnBasicConsole("Umidade menor que a mínima detectada.");
-                isUpdateOK = updateHistoricoUmidade(mac2String((byte *)&chipIdMain), umidadeAtual, PLANTA, USUARIO, false);
             }
             else if (umidadeAtual > umidadeAntiga)
             {
-                isUpdateOK = updateHistoricoUmidade(mac2String((byte *)&chipIdMain), umidadeAtual, PLANTA, USUARIO, true);
+                isUpdateOK = updateHistoricoUmidade(mac2String((byte *)&chipIdMain), umidadeAtual, planta, usuario, true, token);
                 printOnServer("\nO nível de umidade aumentou.");
                 printOnBasicConsole("O nível de umidade aumentou.");
             }
             else
             {
                 // Umidade atual menor que a ultima
-                isUpdateOK = updateHistoricoUmidade(mac2String((byte *)&chipIdMain), umidadeAtual, PLANTA, USUARIO, true);
+                isUpdateOK = updateHistoricoUmidade(mac2String((byte *)&chipIdMain), umidadeAtual, planta, usuario, true, token);
                 printOnServer("\nO nível de umidade diminuiu.");
                 printOnBasicConsole("O nível de umidade diminuiu.");
             }
@@ -134,8 +134,14 @@ void setup()
 
 void loop()
 {
-    umidadeMinima = getMinimalHumidity(PLANTA, USUARIO);
-    printOnServer("Umidade Mínima Obtida: " + String(umidadeMinima));
+    JsonObject clientInfo = getClientInfo(mac2String((byte *)&chipIdMain));
+    umidadeMinima = clientInfo["nivelUmidade"];
+    planta = clientInfo["nomePlanta"].as<String>();
+    usuario = clientInfo["nome"].as<String>();
+    token = clientInfo["token"].as<String>();
+    
+    Serial.println("\nUmidade Mínima Obtida: " + String(umidadeMinima));
+    
     float h = dht.readHumidity();    // Read temperature as Celsius (the default)
     float t = dht.readTemperature(); // Read temperature as Fahrenheit (isFahrenheit = true)
     float f = dht.readTemperature(true);
@@ -177,7 +183,8 @@ void loop()
             printOnBasicConsole(returnHumidityString(soilSensorValue));
             printOnBasicConsole(returnHumidityPorcentageString(porcentHumidade));
         }
-        if (umidadeMinima == -5)
+        
+        if (umidadeMinima == NENHUMA_UMIDADE_OBTIDA)
         {
             printOnServer("Não foi possível obter a umidade mínima pela API");
         }
