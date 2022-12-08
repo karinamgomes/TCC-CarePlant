@@ -51,7 +51,6 @@ export default function App() {
   }, []);
 
 useEffect(()=>{
-  Alert.alert("expoPushToken: "+expoPushToken)
    AsyncStorage.setItem('@plantmanager:expoPushToken',expoPushToken ? expoPushToken : "null");
 },[expoPushToken])
   // const getHasNotification = async () => {
