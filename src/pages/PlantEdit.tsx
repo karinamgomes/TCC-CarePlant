@@ -31,21 +31,26 @@ import { Formik, useFormik, withFormik } from 'formik';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
-import * as yup from 'yup'
 import { scheduleNotification } from '../utils/schedule/Notifications';
-import uuid from 'react-native-uuid';
+
+import * as yup from 'yup'
 
 interface Params {
     plant: PlantProps
 }
 
-export function PlantSave() {
-    const [selectedDateTime, setSelectedDateTime] = useState(new Date());
+export function PlantEdit() {
+    const route = useRoute();
+    //@ts-ignore
+    const plant:PlantProps = route.params.plant;
+    const initialdateAlarmeValue = plant.dataAlarme ? new Date(plant.dataAlarme) : new Date()
+    const initialNumberLevel = plant.nivelDeUmidade ? plant.nivelDeUmidade : 0
+    const [selectedDateTime, setSelectedDateTime] = useState(initialdateAlarmeValue);
     const [showDatePicker, setShowDatePicker] = useState(Platform.OS == 'ios');
     const [hasHumiditySensor, setHasHumiditySensor] = useState(false);
-    const [inputNumber, setInputNumber] = useState<any>(0);
-    const route = useRoute();
+    const [inputNumber, setInputNumber] = useState<string>(initialNumberLevel.toString());
     const navigation = useNavigation();
+
 
     function handleChangeTime(dateTime: Date) {
         if (Platform.OS === 'android') {
@@ -56,30 +61,10 @@ export function PlantSave() {
             setSelectedDateTime(dateTime!);
     }
 
+    
+
     function handleOpenDatetimePickerForAndroid() {
         setShowDatePicker(oldState => !oldState);
-    }
-
-    async function handleSave() {
-        // try {
-        //     console.log("plant:")
-        //     console.log(plant)
-        //     await savePlant({
-        //         ...plant,
-        //         dateTimeNotification: selectedDateTime
-        //     });
-
-        //     navigation.navigate('Confirmation' as never, {
-        //         title: 'Tudo certo',
-        //         subtitle: `Cadastro de ${plant.name} realizado com sucesso.`,
-        //         buttonTitle: 'Minhas plantas',
-        //         nextScreen: 'MyPlants',
-        //     } as never);
-
-        // } catch(err) {
-        //     Alert.alert('Não foi possível salvar.');
-        //     console.log(err)
-        // }
     }
 
     function onChanged(text: any) {
@@ -87,9 +72,9 @@ export function PlantSave() {
         if (onlyNumbers?.length > 3) {
             onlyNumbers = onlyNumbers.substr(0, 3)
         }
-        setInputNumber(onlyNumbers)
+        setInputNumber(onlyNumbers.toString())
     }
-    const [image, setImage] = useState<string>();
+    const [image, setImage] = useState<string>(plant.urlFotoPlanta ?? '');
 
     const uploadImage = async () => {
         if (image != null) {
@@ -117,7 +102,6 @@ export function PlantSave() {
     };
 
     const validationOnlyDigits = (value: any) => {
-
         if (value === undefined) return false
         const uri = value['_3']
         if (!uri) return false
@@ -135,8 +119,6 @@ export function PlantSave() {
         if (!result.cancelled) {
             setImage(result.uri);
             uri = result.uri
-        }else {
-            setImage(undefined)  
         }
         return uri
     };
@@ -145,89 +127,84 @@ export function PlantSave() {
         const name = await AsyncStorage.getItem('@plantmanager:user')
         return name
     }
-    const getExpoToken = async () => {
-        const expoToken = await AsyncStorage.getItem('@plantmanager:expoPushToken')
-        return expoToken
-    }
-
     const platHashasHumiditySensorValidationSchema = yup.object().shape({
         name: yup.string().min(4, ({ min }) => `Minimo de ${min} letras`).required("Campo obrigatório"),
-        codeSensor: yup.string().required("Campo obrigatório"),
-        urlImage: yup.object().test('uri', 'Imagem obrigatória', (value) => {
-            if(image && image !== '') return true
-            return false
-        }),
+        // codeSensor: yup.string().required("Campo obrigatório"),
+       
         level: yup.number().required("Campo obrigatório").min(0, ({ min }) => `O valor deve ser entre ${min} e 100`).max(100, ({ max }) => `O valor deve ser entre 0 e ${max}`)
     })
 
     const platNoHashasHumiditySensorValidationSchema = yup.object().shape({
         name: yup.string().min(4, ({ min }) => `Minimo de ${min} letras`).required("Campo obrigatório"),
-        urlImage: yup.object().test('uri', 'Imagem obrigatória', (value) => {
-            if(image && image !== '') return true
-            return false
-        }),
+        // urlImage: yup.object().test('uri', 'Campo obrigatório', (value) => {
+        //     return validationOnlyDigits(value)
+        // }),
         dateNotification: yup.date().required("Campo obrigatório"),
-        level: yup.number().min(0, ({ min }) => `O valor deve ser entre ${min} e 100`).max(100, ({ max }) => `O valor deve ser entre 0 e ${max}`)
+        // level: yup.number().min(0, ({ min }) => `O valor deve ser entre ${min} e 100`).max(100, ({ max }) => `O valor deve ser entre 0 e ${max}`)
     })
 
     const savePlant = useCallback(async (values: any) => {
         try {
             var dataGravarPlantas = {
                 partitionKey: await getNameUser(),
-                rowKey: uuid.v4(),
+                rowKey: plant.rowKey,
                 nome: values.name,
-                nivelDeUmidade: values.hasHumiditySensor ? parseInt(values.level) : 0,
+                nivelDeUmidade: values.level? parseInt(values.level) : 0,
                 nomeTableStorage: "Planta",
-                sensor: values.hasHumiditySensor ? true : false,
-                codigoSensor: values.hasHumiditySensor ? values.codeSensor : "SemCodigo",
-                urlFotoPlanta: image,
-                token: await getExpoToken(),
+                sensor: plant.sensor,
+                codigoSensor: plant.codigoSensor,
+                urlFotoPlanta: plant.urlFotoPlanta,
+                token: plant.token,
                 dataAlarme: values.dateNotification,
             }
 
             axios({
                 method: 'put',
-                url: 'https://middleware-arduino.azurewebsites.net/GravarPlantas',
+                url: 'https://middleware-arduino.azurewebsites.net/GravarPlantas/Alterar',
                 data: dataGravarPlantas
             }).then((response) => {
-                if(!dataGravarPlantas.sensor){
+
+                if(!plant.sensor){
+                    Notifications.cancelScheduledNotificationAsync(plant.nome)
                     scheduleNotification(dataGravarPlantas.nome,`${dataGravarPlantas.nome} precisa de cuidados, não esqueça de regá-la! 🌱`,dataGravarPlantas.dataAlarme)
                 }
+
                 navigation.navigate('Confirmation' as never, {
                     title: 'Tudo certo',
-                    subtitle: `Cadastro de ${values.name} realizado com sucesso.`,
+                    subtitle: `Atualização de ${values.name} realizado com sucesso.`,
                     buttonTitle: 'Minhas plantas',
                     nextScreen: 'MyPlants',
                 } as never);
-            }).catch(function (err) {
 
-                Alert.alert('Erro', `Ocorreu um erro ao adicionar planta, por favor, tente novamente mais tarde!`)
-                   
-                });
-            
+            }).catch(function (err) {
+            Alert.alert('Erro', `Ocorreu um erro ao editar planta, por favor, tente novamente mais tarde!`)
+               
+            })
         } catch (err) {
-            Alert.alert('Erro', `Ocorreu um erro ao adicionar planta, por favor, tente novamente mais tarde!`)
+            Alert.alert('Erro', `Ocorreu um erro ao editar planta, por favor, tente novamente mais tarde!`)
         }
     }, [image])
 
     return (
-        <Formik initialValues={{ urlImage: '', name: '', hasHumiditySensor: false, dateNotification: new Date(), level: "", codeSensor: "" }}
+        <Formik initialValues={{ urlImage: plant.urlFotoPlanta ?? '', name: plant.nome , hasHumiditySensor: plant.sensor ?? false, dateNotification: selectedDateTime, level: plant.nivelDeUmidade ?? 0, codeSensor: plant.codigoSensor }}
             onSubmit={ (values) => {
-                savePlant(values)
+                console.log(values)
+                 savePlant(values)
             }
             }
             validationSchema={hasHumiditySensor ? platHashasHumiditySensorValidationSchema : platNoHashasHumiditySensorValidationSchema}
         >
-            {({ handleChange, handleBlur, handleSubmit, setFieldValue, values, touched, errors ,validateForm}) => (
+            {({ handleChange, handleBlur, handleSubmit, setFieldValue, values, touched, errors }) => (
                 <ScrollView
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={styles.scrollListContainer}
                 >
 
                     <View style={styles.container}>
+                        
                         <View style={styles.plantInfo}>
-
-                            {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+                        <Text style={styles.titlePage}>Edição de planta</Text>
+                            {image && <Image source={{ uri: image }} style={{ width: 150, height: 150 }} />}
 
                             {!image && <TouchableOpacity
                                 style={styles.buttonStyle}
@@ -240,9 +217,9 @@ export function PlantSave() {
                                 />
                                 <Text style={styles.buttonTextStyle}>Adicione uma imagem </Text>
                                 
+                                     <Text style={{ fontSize: 13, color: '#d11507' , paddingTop:8}}>{touched.urlImage && errors.urlImage ? errors.urlImage : ''}</Text>
                                 
                             </TouchableOpacity>}
-                            <Text style={{ fontSize: 13, color: '#d11507' , paddingTop:8}}>{touched.urlImage && errors.urlImage && !image ? errors.urlImage : ''}</Text>
 
                             <TextInput
                                 style={styles.inputPlantName}
@@ -258,7 +235,7 @@ export function PlantSave() {
                         </View>
 
                         <View style={styles.controller}>
-                            <View style={styles.tipContainer}>
+                            {/* <View style={styles.tipContainer}>
                                 <CheckBox
                                     // disabled={false}
                                     // checked={hasHumiditySensor}
@@ -274,12 +251,12 @@ export function PlantSave() {
                                 </Text>
                             
                                
-                            </View>
+                            </View> */}
 
 
-                            {!hasHumiditySensor && <Text style={styles.alertLabel}>
-                                Caso não possua sensor,{'\n'}
-                                escolha o melhor horário para ser lembrado:
+                            {!plant.sensor && <Text style={styles.alertLabel}>
+                                Horário de regagem:{'\n'}
+                                
                             </Text>}
 
                             {showDatePicker && (
@@ -301,7 +278,7 @@ export function PlantSave() {
                             )}
 
                             {
-                                Platform.OS === 'android' && !hasHumiditySensor && (
+                                Platform.OS === 'android' && !plant.sensor && (
                                     <TouchableOpacity
                                         style={styles.dateTimePickerButton}
                                         onPress={handleOpenDatetimePickerForAndroid}
@@ -313,18 +290,11 @@ export function PlantSave() {
                                 )
                             }
 
-                            {hasHumiditySensor &&
+                            {plant.sensor &&
                                 <View style={styles.teste}>
-                                    {hasHumiditySensor && <View style={styles.boxCodeSensor}>
-                                    <TextInput 
-                                            style={styles.inputCodeSensor}
-                                            placeholder='Digite o código do sensor'
-                                            placeholderTextColor={colors.heading}
-                                            onChangeText={handleChange('codeSensor')}
-                                            onBlur={handleBlur('codeSensor')}
-                                            value={values.codeSensor}
-                                            />
-                                            <Text style={{ fontSize: 13, color: '#d11507', textAlign: 'center' }}>{touched.codeSensor && errors.codeSensor ? errors.codeSensor : ''}</Text>
+                                    {plant.sensor && <View style={styles.boxCodeSensor}>
+
+                                            <Text style={styles.inputCodeSensor}> Código do sensor: {plant.codigoSensor}</Text>
                                     </View>}
                                     
                                     <View style={styles.tipContainerHasSensor}>
@@ -336,14 +306,13 @@ export function PlantSave() {
                                         
 
                                         <Text style={styles.tipText}>
-                                            Em qual o nível de umidade
-                                            você deseja ser notificado?
+                                            Nível de umidade a ser notificado:
                                         </Text>
 
                                         <View style={styles.inputNumber}>
                                             <TextInput
                                                 keyboardType="numeric"
-                                                value={inputNumber}
+                                                value={inputNumber.toString()}
                                                 onChangeText={texte => { onChanged(texte); setFieldValue('level', texte) }}
                                                 onBlur={handleBlur('level')}
                                             />
@@ -352,13 +321,14 @@ export function PlantSave() {
                                     </View>
                                     
                                     <Text style={{ fontSize: 13, color: '#d11507', textAlign: 'center' }}>{touched.level && errors.level ? errors.level : ''}</Text>
-                                    
+
                                 </View>
                             }
 
                             <Button
-                                title="Cadastrar nova planta"
-                                onPress={() => {validateForm(),handleSubmit()}}
+                                // style={{paddingHorizontal:-1}}
+                                title="Atualizar planta"
+                                onPress={() => handleSubmit()}
                             />
                         </View>
                     </View>
@@ -372,6 +342,17 @@ export function PlantSave() {
 }
 
 const styles = StyleSheet.create({
+    titlePage:{
+        fontSize:23,
+        color:colors.white,
+        // marginBottom:30,
+        fontWeight:'600',
+        width:"100%",
+        textAlign:"center",
+        paddingVertical:3,
+        borderRadius:2,
+        marginBottom:"12%"
+        },
     container: {
         flex: 1,
         justifyContent: 'space-between',
@@ -384,18 +365,19 @@ const styles = StyleSheet.create({
     },
     plantInfo: {
         flex: 1,
-        paddingHorizontal: 80,
-        paddingVertical: 50,
-        paddingTop:1,
+        paddingHorizontal: 5,
+        paddingVertical: 5,
+        paddingBottom: 100,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: colors.baseGreen,
-        height: Dimensions.get('window').height * 0.4
+        height: Dimensions.get('window').height * 0.1
     },
     controller: {
         backgroundColor: colors.white,
         paddingHorizontal: 20,
-        paddingTop: 20,
+        alignContent: 'center',
+        paddingTop: '25%',
         paddingBottom: getBottomSpace() || 20
     },
     plantName: {
@@ -451,12 +433,11 @@ const styles = StyleSheet.create({
         fontFamily: fonts.complement,
         color: colors.heading,
         fontSize: 14,
-        marginBottom: 5
     },
     dateTimePickerButton: {
         width: '100%',
         alignItems: 'center',
-        paddingVertical: 40,
+        paddingBottom: 40,
     },
     dateTimePickerText: {
         color: colors.heading,
@@ -483,14 +464,13 @@ const styles = StyleSheet.create({
         padding: 4,
         textAlign: "center",
         fontSize: 17,
-        marginTop: '15%'
+        marginTop: '12%'
 
     },
     inputCodeSensor: {
-        borderBottomColor: colors.heading,
-        borderBottomWidth: 1,
+
         color: colors.heading,
-        fontSize: 14,
+        fontSize: 16,
         width: '65%',
         padding: 4,
         textAlign: "center",
@@ -518,7 +498,6 @@ const styles = StyleSheet.create({
     buttonTextStyle: {
         color: '#FFFFFF',
         fontSize: 20,
-        width:"100%"
     },
     plusCicle: {
         height: 50,

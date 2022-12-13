@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     SafeAreaView,
     Text,
@@ -18,24 +18,25 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function Welcome() {
     const navigation = useNavigation();
+    useEffect(() => {
+        ValidaNome()
+    });
 
-    async function handleStart(){
-        
-        // await AsyncStorage.removeItem('@plantmanager:user')
-
-        console.log(await AsyncStorage.getItem('@plantmanager:user'))
+    async function ValidaNome(){
         let UserName = await AsyncStorage.getItem('@plantmanager:user')
         if(!UserName){
             navigation.navigate('UserIdentification' as never);
         }else{
             navigation.navigate('MyPlants' as never)
         }
-
-        // navigation.navigate('UserIdentification' as never);
     }
+    
 
-    const teste = AsyncStorage.getItem("@plantmanager:user");
-    console.log(JSON.stringify(teste))
+    async function handleStart(){
+       
+        let UserName = await AsyncStorage.getItem('@plantmanager:user')
+        navigation.navigate('UserIdentification' as never);
+    }
 
     return (
         <SafeAreaView style={styles.container}>

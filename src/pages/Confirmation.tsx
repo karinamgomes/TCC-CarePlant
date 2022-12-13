@@ -30,11 +30,12 @@ export function Confirmation(){
     const {
         title,
         buttonTitle,
+        subtitle,
         nextScreen
     } = routes.params as Params;
     
     function handleMoveOn(){
-        navigation.navigate(nextScreen as never);
+        navigation.navigate(nextScreen as never, {refresh : true} as never);
     }
 
     return (
@@ -54,8 +55,8 @@ export function Confirmation(){
                 </Text>
 
                 <Text style={styles.subtitle}>
-                    Que tal começar a cadastrar {'\n'}
-                    suas plantas?
+                    {subtitle}
+                    
                 </Text>                
 
                 <View style={styles.footer}>

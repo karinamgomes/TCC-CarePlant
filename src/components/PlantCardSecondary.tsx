@@ -1,9 +1,10 @@
 import React from 'react';
-import { 
-    StyleSheet, 
+import {
+    StyleSheet,
     Text,
     View ,
-    Animated 
+    Animated,
+    Image
 } from 'react-native';
 import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
@@ -16,9 +17,9 @@ import fonts from '../styles/fonts';
 
 interface PlantProps extends RectButtonProps {
     data: {
-        name: string;
-        photo: string;
-        hour: string;
+        nome: string;
+        urlFotoPlanta?: string;
+        // hour: string;
     };
     handleRemove: () => void;
 }
@@ -45,22 +46,25 @@ export const PlantCardSecondary = ({ data, handleRemove, ...rest} : PlantProps) 
                 style={styles.container}
                 {...rest}
             >
-                <SvgFromUri 
-                    uri={data.photo} 
-                    width={70} 
-                    height={50} 
-                />
+                {data.urlFotoPlanta &&
+                    <Image
+                        source={{ uri: data.urlFotoPlanta  }}
+                        // source={data.urlFotoPlanta}
+                        style={styles.image}
+                        resizeMode="contain"
+                    />               
+                } 
                 <Text style={styles.title}>
-                    { data.name }
+                    { data.nome }
                 </Text>
                 <View style={styles.details}>
-                    <Text style={styles.timeLabel}>
+                    {/* <Text style={styles.timeLabel}>
                         Regar às
                     </Text>
                     <Text style={styles.time}>
                         {data.hour}
-                    </Text>
-                
+                    </Text> */}
+
                 </View>
             </RectButton>
         </Swipeable>
@@ -68,6 +72,12 @@ export const PlantCardSecondary = ({ data, handleRemove, ...rest} : PlantProps) 
 }
 
 const styles = StyleSheet.create({
+    image:{
+        width:60,
+        height:60,
+        borderRadius:15,
+        
+    },
     container: {
         flex: 1,
         flexDirection:'row',
@@ -82,15 +92,15 @@ const styles = StyleSheet.create({
     },
     title: {
         flex: 1,
-        marginLeft: 10,
+        marginLeft: 15,
         fontFamily: fonts.heading,
         fontSize: 17,
         color: colors.heading
     },
     details: {
-        alignItems: 'flex-end', 
+        alignItems: 'flex-end',
     },
-    timeLabel: {        
+    timeLabel: {
         fontSize: 16,
         fontFamily: fonts.text,
         color: colors.body_light,
@@ -112,5 +122,5 @@ const styles = StyleSheet.create({
         position: 'relative',
         right: 40,
         paddingLeft: 15
-    } 
+    }
 })

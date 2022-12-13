@@ -49,7 +49,8 @@ export function UserIdentification() {
             await AsyncStorage.setItem('@plantmanager:user', name);
             navigation.navigate('Confirmation'as never, {
                 title: 'Pronto!',
-                buttonTitle: 'Cadastrar',
+                subtitle:'Que tal começar a cadastrar suas plantas?',
+                buttonTitle: 'Vamos lá!',
                 nextScreen: 'MyPlants',
             }as never);        
         }catch{
@@ -86,6 +87,7 @@ export function UserIdentification() {
                                     { borderColor: colors.white }
                                 ]}
                                 placeholder="Digite o nome"
+                                placeholderTextColor={colors.white}
                                 onBlur={handleInputBlur}
                                 onFocus={handleInputFocus}
                                 onChangeText={handleInputChange}

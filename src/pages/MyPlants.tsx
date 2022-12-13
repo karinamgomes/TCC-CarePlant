@@ -12,28 +12,55 @@ import {
 import SemPlantas from '../assets/SemPlantas.png';
 import { Header } from '../components/Header';
 import colors from '../styles/colors';
-import { PlantProps, loadPlant, removePlant } from '../libs/storage';
+import { PlantProps, removePlant } from '../libs/storage';
 import fonts from '../styles/fonts';
 import { PlantCardSecondary } from '../components/PlantCardSecondary';
 import { Load } from '../components/Load';
 import { Button } from '../components/Button';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { sendPushNotification } from '../utils/send-notification';
+import { cancelScheduledNotification } from '../utils/schedule/Notifications';
 
 export function MyPlants() {
     const [myPlants, setMyPlants] = useState<PlantProps[]>([]);
     const [loading, setLoading] = useState(true);
     const navigation = useNavigation();
-    
-    function handlePlantSelect(plant: PlantProps){
+    const routes = useRoute();
+
+    function handlePlantSelect(plant: PlantProps) {
         navigation.navigate('PlantStatus' as never, { plant } as never);
     }
-    async function handleNewPlant(){
-        navigation.navigate('PlantSelect' as never);
-        console.log(myPlants)
+    async function handleNewPlant() {
+
+        navigation.navigate('PlantSave' as never);
     }
+
+    const deletePlant = async (plant: string) => {
+
+        try {
+            var dataDeletePlanta ={
+                "partitionKey": await AsyncStorage.getItem('@plantmanager:user'),
+                "rowKey": plant,
+                "eTag": "*",
+                "nomeTableStorage": "Planta"
+            }
+
+            axios({
+                method: 'post',
+                url: 'https://middleware-arduino.azurewebsites.net/GravarPlantas',
+                data: dataDeletePlanta
+            }).then(() => {
+                getPlants()
+            });
+            cancelScheduledNotification(plant)
+            
+        } catch (err) { alert("Ocorreu um erro ao deletar planta!") }
+    }
+
     function handleRemove(plant: PlantProps) {
-        Alert.alert('Remover', `Deseja remover a ${plant.name}?`, [
+        Alert.alert('Remover', `Deseja remover a ${plant.nome}?`, [
             {
                 text: 'Cancelar',
                 style: 'cancel'
@@ -42,10 +69,8 @@ export function MyPlants() {
                 text: 'Sim, remover',
                 onPress: async () => {
                     try {
-                        await removePlant(plant.id);
-                        setMyPlants((oldData) =>
-                            oldData.filter((item) => item.id !== plant.id)
-                        );
+                        await deletePlant(plant.rowKey);
+
                     } catch (error) {
                         Alert.alert('Não foi possível remover! ');
                     }
@@ -55,14 +80,30 @@ export function MyPlants() {
 
     }
 
-    useEffect(() => {
-        async function loadStorageData() {
-            const plantsStoraged = await loadPlant();
-            setMyPlants(plantsStoraged);
-            setLoading(false);
+    const getPlants = async () => {
+        try {
+            axios({
+                method: 'get',
+                url: 'https://middleware-arduino.azurewebsites.net/GravarPlantas?tableStorageName=Planta',
+                headers: {
+                    accept: '/',
+                    partitionKey: await AsyncStorage.getItem('@plantmanager:user')
+                }
+            }).then((response) => {
+                setLoading(false)
+                const plantsStoraged = response.data.conteudo.result
+                setMyPlants(plantsStoraged)
+                
+                return response.data.result
+            }).catch((err)=>{console.log(err) ; Alert.alert("Ocorreu um erro ao carregar as pantas: " + err.message)});
+        } catch (err:any) {
+            Alert.alert("Erro ao carregar plantas cadastradas")
+            return err
         }
-        loadStorageData();
-    }, [myPlants])
+    }
+    useEffect(() => {
+        getPlants()
+    }, [routes.params])
 
     if (loading) return <Load />
 
@@ -74,30 +115,29 @@ export function MyPlants() {
                     Minhas <Text style={styles.plantsTitleBold}>Plantas</Text>
                 </Text>
                 {myPlants.length <= 0 ?
-                <View style={styles.semplanta}>
-                    <Image
-                        source={SemPlantas}
-                        style={styles.image}
-                        resizeMode="contain"
-                    />
-                    <Text style={styles.noPlants}>
-                        Não há plantas cadastradas!
-                    </Text>
-                    
-                </View>
-                :
-                <FlatList
-                    data={myPlants}
-                    keyExtractor={(item) => String(item.id)}
-                    renderItem={({ item }) => (
-                        <PlantCardSecondary
-                            data={item}
-                            onPress={()=>handlePlantSelect(item)}
-                            handleRemove={()=>handleRemove(item)}
+                    <View style={styles.semplanta}>
+                        <Image
+                            source={SemPlantas}
+                            style={styles.image}
+                            resizeMode="contain"
                         />
-                    )}
-                    showsVerticalScrollIndicator={false}
-                />
+                        <Text style={styles.noPlants}>
+                            Não há plantas cadastradas!
+                        </Text>
+                    </View>
+                    :
+                    <FlatList
+                        data={myPlants}
+                        keyExtractor={(item) => String(item.rowKey)}
+                        renderItem={({ item }) => (
+                            <PlantCardSecondary
+                                data={item}
+                                onPress={() => handlePlantSelect(item)}
+                                handleRemove={() => handleRemove(item)}
+                            />
+                        )}
+                        showsVerticalScrollIndicator={false}
+                    />
                 }
             </View>
             <View>
@@ -105,6 +145,8 @@ export function MyPlants() {
                     title="Nova Planta"
                     onPress={handleNewPlant}
                 />
+                
+
             </View>
         </View>
     )
@@ -165,20 +207,20 @@ const styles = StyleSheet.create({
         color: colors.heading,
         marginVertical: 20
     },
-    image:{
+    image: {
         height: Dimensions.get('window').width * 0.4,
         width: 200,
         paddingHorizontal: 170,
-        marginBottom:25
+        marginBottom: 25
     },
-    noPlants:{
+    noPlants: {
         fontSize: 22,
         fontFamily: fonts.heading,
         color: colors.heading,
     },
-    semplanta:{
+    semplanta: {
         alignItems: 'center',
-        justifyContent:'center',
+        justifyContent: 'center',
         height: Dimensions.get('window').width * 0.9
     }
 
