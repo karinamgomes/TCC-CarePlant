@@ -8,7 +8,7 @@ Acessar package.json e executar o script
 Credenciáis necessárias para gerar o APK, o terminal vai solicitar elas.
 
 **Username:** pedrleonardi@gmail.com\
-**Password:** EX2059Meunumero!
+**Password:** Segredo!123
 
 
 No final da execução o terminal vai exibir um link para donwload do APK :)
